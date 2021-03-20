@@ -10,7 +10,7 @@ namespace Blue_Fin_Inc.Models
         // fields
         private int productCode;
         private string name;
-        private string discription;
+        private string description;
         private int stock;
         private double price;
 
@@ -35,13 +35,13 @@ namespace Blue_Fin_Inc.Models
             }
         }
 
-        public string Discription
+        public string Description
         {
-            get => discription;
+            get => description;
 
             private set
             {
-                discription = value;
+                description = value;
             }
         }
         public int Stock
@@ -71,11 +71,11 @@ namespace Blue_Fin_Inc.Models
         }
 
         // constructor 
-        public Product(int _productCode, string _name, string _discription, double _price)
+        public Product(int _productCode, string _name, string _description, double _price)
         {
             ProductCode = _productCode;
             Name = _name;
-            Discription = _discription;
+            Description = _description;
             Stock = 0;
             Price = _price;
         }

@@ -55,7 +55,7 @@ namespace Blue_Fin_Inc.Models
                 }
                 else
                 {
-                    throw new ArgumentException("Widght must be grater than 0.");
+                    throw new ArgumentException("Widht must be grater than 0.");
                 }
             }
         }
