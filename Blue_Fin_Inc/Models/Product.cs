@@ -80,7 +80,7 @@ namespace Blue_Fin_Inc.Models
             Price = _price;
         }
 
-        // methods
+        // virtual methods
         public virtual void AddStock(int amount)
         {
             if(amount <= 0)
