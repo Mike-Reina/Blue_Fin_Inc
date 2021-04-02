@@ -11,34 +11,44 @@ namespace Blue_Fin_Inc.Controllers
     public class OrderController : Controller
     {
         
+        //private static Order order = new Order("D14F653", "+353830492724");
 
-        //ResuFul API Methods
+
+
+
+
+        //Methods
+        //MVC Controllers
         
-        // GET: OrderController/Details/5
-        public ActionResult Details()
-        {
-            Order order1 = new Order("D14F653", "+353830492724");
-            Livestock livestock1 = new Livestock(CareLevel.Easy, Temperment.Peaceful, WaterType.Fresh, "Black, Silver, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "5cm", 2001, "Harlequin Rasbora", "The Harlequin Rasbora is easily identified by its characteristic black pork chop shaped patch and beautifully lustrous copper/orange body", 2.99);
-            Equipment equipment1 = new Equipment("Juwel", 92, 41, 55, "Black", "50 kg", 1001, "Juwel Vision 180", "Painstaking workmanship from Germany, top - quality materials and perfectly tuned technology guarantee the very best of quality and safety, meaning a long service life for your new aquarium.", 610.99);
-            
-            order1.AddProduct(livestock1);
-            order1.AddProduct(equipment1);
-            order1.AddProduct(equipment1);
-            order1.RemoveProduct(livestock1);
-
-            return View(order1);
-        }
-
-
-        //To be added...
         // GET: OrderController
         public ActionResult Index()
         {
             return View();
         }
 
+
+        //Simple display of the order summary
+        // GET: OrderController/Details/
+        public ActionResult OrderDetails()
+        {
+            Order order1 = new Order("D14F653", "+353830492724");
+            Livestock livestock1 = new Livestock(CareLevel.Easy, Temperment.Peaceful, WaterType.Fresh, "Black, Silver, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "5cm", 2001, "Harlequin Rasbora", "The Harlequin Rasbora is easily identified by its characteristic black pork chop shaped patch and beautifully lustrous copper/orange body", 2.99);
+            Equipment equipment1 = new Equipment("Juwel", 92, 41, 55, "Black", "50 kg", 1001, "Juwel Vision 180", "Painstaking workmanship from Germany, top - quality materials and perfectly tuned technology guarantee the very best of quality and safety, meaning a long service life for your new aquarium.", 610.99);
+            Livestock livestock2 = new Livestock(CareLevel.Easy, Temperment.Peaceful, WaterType.Fresh, "Black, Silver, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "5cm", 2001, "Harlequin Rasbora", "The Harlequin Rasbora is easily identified by its characteristic black pork chop shaped patch and beautifully lustrous copper/orange body", 2.99);
+
+            order1.AddProduct(livestock1);
+            order1.AddProduct(equipment1);
+            order1.AddProduct(equipment1);
+            order1.RemoveProduct(livestock1);
+            order1.RemoveProduct(livestock2);
+
+            return View(order1);
+      
+        }
+
+
         // GET: OrderController/Create
-        public ActionResult Create()
+        public ActionResult AddProd()
         {
             return View();
         }
@@ -46,7 +56,7 @@ namespace Blue_Fin_Inc.Controllers
         // POST: OrderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult AddProd(int productCode_in)
         {
             try
             {
@@ -57,6 +67,28 @@ namespace Blue_Fin_Inc.Controllers
                 return View();
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: OrderController/Edit/5
         public ActionResult Edit(int id)

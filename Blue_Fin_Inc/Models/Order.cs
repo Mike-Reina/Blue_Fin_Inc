@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+//For many to many relationship https://docs.microsoft.com/en-us/ef/core/modeling/relationships?tabs=data-annotations%2Cfluent-api-composite-key%2Csimple-key
+// https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-an-entity-framework-data-model-for-an-asp-net-mvc-application
 
 namespace Blue_Fin_Inc.Models
 {
@@ -74,9 +76,9 @@ namespace Blue_Fin_Inc.Models
                 OrderPrice -= product_out.Price;
                 if (OrderPrice == 0) // Not entirely sure about this but need to check it further
                 {
-                    return"There are no products to the basket!";
+                    return"There are no products in the basket!";
                 }
-                return "Product " + product_out.ProductCode + "was removed from the basket!";
+                return "Product " + product_out.ProductCode + " was removed from the basket!";
 
                 //Reminder:should create some code to check if remaining products are livestock so I can re-set the property containsLivestock !!!
             }
