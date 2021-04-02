@@ -22,6 +22,20 @@ namespace Blue_Fin_Inc.Controllers
             return View(LivestockList);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Index(string LiveSearch)
+        {
+            ViewData["GetLivestockDetails"] = LiveSearch;
+
+            var EquQuery = from p in LivestockList select p;
+
+            if (!String.IsNullOrEmpty(LiveSearch))
+            {
+                EquQuery = EquQuery.Where(p => p.Name.Contains(LiveSearch) || p.Description.Contains(LiveSearch));
+            }
+            return View(EquQuery);
+        }
+
         // GET: LivestockController/Details/5
         public ActionResult Details(int id)
         {

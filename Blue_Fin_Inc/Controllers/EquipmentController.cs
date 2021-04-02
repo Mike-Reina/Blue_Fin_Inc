@@ -23,6 +23,20 @@ namespace Blue_Fin_Inc.Controllers
             return View(EquipmentList);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Index(string EquSearch)
+        {
+            ViewData["GetEquipmentDetails"] = EquSearch;
+
+            var EquQuery = from p in EquipmentList select p;
+
+            if (!String.IsNullOrEmpty(EquSearch))
+            {
+                EquQuery = EquQuery.Where(p => p.Name.Contains(EquSearch) || p.Description.Contains(EquSearch) || p.Manufacturer.Contains(EquSearch));
+            }
+            return View(EquQuery);
+        }
+
         // GET: EquipmentController/Details/5
         public ActionResult Details(int id)
         {
