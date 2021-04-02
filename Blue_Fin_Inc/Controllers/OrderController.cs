@@ -12,7 +12,7 @@ namespace Blue_Fin_Inc.Controllers
     {
         
 
-        //ResuFul API Methods
+        //MVC Controller Methods
         
         // GET: OrderController/Details/5
         public ActionResult Details()
