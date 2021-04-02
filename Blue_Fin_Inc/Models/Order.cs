@@ -14,7 +14,7 @@ namespace Blue_Fin_Inc.Models
     {
         
         //Collection of products
-        private List<Product> orderList;
+        public List<Product> prodList;
 
         //Property (ies)
         [Key]
@@ -52,13 +52,13 @@ namespace Blue_Fin_Inc.Models
             OrderPrice = 0;
             ContainsLivestock = false;
 
-            orderList = new List<Product>();
+            prodList = new List<Product>();
         }
 
         //Methods
         public void AddProduct(Product product_in)
         {
-            orderList.Add(product_in);
+            prodList.Add(product_in);
             OrderPrice += product_in.Price;
            //Reminder:should create some code to check if the product is livestock so I can set the propert containsLivestock !!!
                 
@@ -67,10 +67,10 @@ namespace Blue_Fin_Inc.Models
         public string RemoveProduct(Product product_out)
         {
             //first lets find the product we need to remove from the order
-            Product found = orderList.FirstOrDefault(p=> p.ProductCode == product_out.ProductCode);
+            Product found = prodList.FirstOrDefault(p=> p.ProductCode == product_out.ProductCode);
             if(found != null)
             {
-                orderList.Remove(found);
+                prodList.Remove(found);
                 OrderPrice -= product_out.Price;
                 if (OrderPrice == 0) // Not entirely sure about this but need to check it further
                 {
