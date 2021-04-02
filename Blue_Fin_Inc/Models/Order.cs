@@ -74,7 +74,7 @@ namespace Blue_Fin_Inc.Models
                 OrderPrice -= product_out.Price;
                 if (OrderPrice == 0) // Not entirely sure about this but need to check it further
                 {
-                    return"There are no products to the basket!";
+                    return"There are no products in the basket!";
                 }
                 return "Product " + product_out.ProductCode + "was removed from the basket!";
 
