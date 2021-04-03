@@ -50,32 +50,44 @@ namespace Blue_Fin_Inc.Controllers
                 return NotFound("No equipment found with product code: " + id + "\nIf this is new equipment please add it to the system.");
             }
         }
- 
+
         // GET: EquipmentController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: EquipmentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Equipment newEquipment)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                EquipmentList.Add(newEquipment);
+                return View("Index", EquipmentList);
             }
-            catch
+            else
             {
-                return View();
+                return View("Index", EquipmentList);
             }
         }
+
+        // POST: EquipmentController/Create
 
         // GET: EquipmentController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = EquipmentList.Where(p => p.ProductCode == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return View(item);
         }
 
         // POST: EquipmentController/Edit/5

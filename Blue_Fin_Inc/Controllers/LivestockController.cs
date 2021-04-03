@@ -13,11 +13,11 @@ namespace Blue_Fin_Inc.Controllers
         static List<Livestock> LivestockList = new List<Livestock>()
         {
             new Livestock(CareLevel.Easy, Temperment.Peaceful, WaterType.Fresh, "Black, Silver, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "5cm", 2001, "Harlequin Rasbora", "The Harlequin Rasbora is easily identified by its characteristic black pork chop shaped patch and beautifully lustrous copper/orange body", 2.99),
-            new Livestock(CareLevel.Easy, Temperment.Aggresive, WaterType.Fresh, "Black, Blue, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "7.5cm", 2002, "Crown Tail Betta", "The Crown Tail Betta has a striking, elaborate tail that differentiates it from other Bettas. The Crown Tail has a teardrop shape to its tail while the Twin Tail is split, almost giving the suggestion of having two tails.", 19.99)
+            new Livestock(CareLevel.Easy, Temperment.Aggressive, WaterType.Fresh, "Black, Blue, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "7.5cm", 2002, "Crown Tail Betta", "The Crown Tail Betta has a striking, elaborate tail that differentiates it from other Bettas. The Crown Tail has a teardrop shape to its tail while the Twin Tail is split, almost giving the suggestion of having two tails.", 19.99)
         };
 
         // GET: LivestockController
-        public ActionResult Index()
+        public ActionResult Index(List<Livestock> LivestockList)
         {
             return View(LivestockList);
         }
@@ -64,11 +64,11 @@ namespace Blue_Fin_Inc.Controllers
             if (ModelState.IsValid)
             {
                 LivestockList.Add(newLivestock);
-                return View("Details");
+                return View("Index", LivestockList);
             }
             else
             {
-                return View("Index");
+                return View("Index", LivestockList);
             }
         }
 
@@ -83,14 +83,17 @@ namespace Blue_Fin_Inc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
-            try
+            if (id == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+
+            var item = LivestockList.Where(p => p.ProductCode == id);
+            if (item == null)
             {
-                return View();
+                return NotFound();
             }
+            return View(item);
         }
 
         // GET: LivestockController/Delete/5

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,7 +8,7 @@ namespace Blue_Fin_Inc.Models
 {
     // enums
     public enum CareLevel { Easy, Medium, Hard}
-    public enum Temperment { Peaceful, SemiAggresive, Aggresive }
+    public enum Temperment { Peaceful,[Display (Name = "Semi-Aggressive")] SemiAggressive, Aggressive }
     public enum WaterType { Fresh, Salt }
     public class Livestock : Product
     {
@@ -20,60 +21,62 @@ namespace Blue_Fin_Inc.Models
         private string maxSize;
 
         // properties
+        [Required]
         public CareLevel CareLevel 
         {
             get => careLevel;
 
-            private set
+            set
             {
                 careLevel = value;
             }
         }
-
+        [Required]
         public Temperment Temperment
         {
             get => temperment;
 
-            private set
+            set
             {
                 temperment = value;
             }
         }
-
+        [Required]
         public WaterType WaterType
         {
             get => waterType;
 
-            private set
+            set
             {
                 waterType = value;
             }
         }
-
+        [Required]
         public string Colours
         {
             get => colours;
 
-            private set
+            set
             {
                 colours = value;
             }
         }
+        [Required]
         public string WaterConditions
         {
             get => waterConditions;
 
-            private set
+            set
             {
                 waterConditions = value;
             }
         }
-
+        [Required]
         public string MaxSize
         {
             get => maxSize;
 
-            private set
+            set
             {
                     maxSize = value;
             }
@@ -89,7 +92,10 @@ namespace Blue_Fin_Inc.Models
             WaterConditions = _waterConditions;
             MaxSize = _maxSize;
         }
+        public Livestock() : base()
+        {
 
+        }
         // methods 
         public override void AddStock(int amount)
         {
