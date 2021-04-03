@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,21 +17,23 @@ namespace Blue_Fin_Inc.Models
         private string weight;
 
         // properties
+        [Required]
         public string Manufacturer
         {
             get => manufacturer;
 
-            private set
+            set
             {
                 manufacturer = value;
             }
         }
 
+        [Required]
         public int Lenght
         {
             get => lenght;
 
-            private set
+            set
             { 
                 if (value > 0)
                 {
@@ -43,11 +46,12 @@ namespace Blue_Fin_Inc.Models
             }
         }
 
+        [Required]
         public int Width
         {
             get => width;
 
-            private set
+            set
             {
                 if (value > 0)
                 {
@@ -60,11 +64,12 @@ namespace Blue_Fin_Inc.Models
             }
         }
 
+        [Required]
         public int Height
         {
             get => height;
 
-            private set
+            set
             {
                 if (value > 0)
                 {
@@ -76,21 +81,24 @@ namespace Blue_Fin_Inc.Models
                 }
             }
         }
+
+        [Required]
         public string Colour
         {
             get => colour;
 
-            private set
+            set
             {
                 colour = value;
             }
         }
 
+        [Required]
         public string Weight
         {
             get => weight;
 
-            private set
+            set
             {
                 weight = value;
             }
@@ -105,6 +113,11 @@ namespace Blue_Fin_Inc.Models
             Height = _height;
             Colour = _colour;
             Weight = _weight;
+        }
+
+        public Equipment()
+        {
+
         }
 
         //methods

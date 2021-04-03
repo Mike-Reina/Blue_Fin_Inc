@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,44 +16,52 @@ namespace Blue_Fin_Inc.Models
         private double price;
 
         // properties
+        [Required]
+        [Key]
         public int ProductCode 
         { 
             get => productCode; 
 
-            private set
+            set
             {
                 productCode = value;
             } 
         }
 
+        [Required]
         public string Name
         {
             get => name;
 
-            private set
+            set
             {
                 name = value;
             }
         }
 
+        [Required]
         public string Description
         {
             get => description;
 
-            private set
+            set
             {
                 description = value;
             }
         }
+
+        [Required]
         public int Stock
         { 
             get => stock;
 
-            private set
+            set
             {
                 stock = value;
             }
         }
+
+        [Required]
         public double Price
         { 
             get => price;
@@ -78,6 +87,11 @@ namespace Blue_Fin_Inc.Models
             Description = _description;
             Stock = 0;
             Price = _price;
+        }
+
+        public Product()
+        {
+
         }
 
         // virtual methods
