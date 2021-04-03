@@ -41,7 +41,11 @@ namespace Blue_Fin_Inc.Models
         [DisplayName("Does the order contain livestock?")]
         public bool ContainsLivestock { get; set; }
 
-        
+        //Default Constructor
+        public Order()
+        {
+
+        }
 
         //Constructor
         public Order(string eircode_in, string contactNo_in)
