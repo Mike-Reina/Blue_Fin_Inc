@@ -10,11 +10,24 @@ namespace Blue_Fin_Inc.Controllers
 {
     public class EquipmentController : Controller
     {
+        //DB field
+        private readonly ApplicationContext db;
+
+        //Constructor
+        public EquipmentController()
+        {
+            db = new ApplicationContext();
+
+            db.Database.EnsureCreated();
+        }
+
+
         static List<Equipment> EquipmentList = new List<Equipment>()
         {
             new Equipment("Juwel", 92, 41, 55, "Black", "50 kg", 1001, "Juwel Vision 180", "Painstaking workmanship from Germany, top - quality materials and perfectly tuned technology guarantee the very best of quality and safety, meaning a long service life for your new aquarium.", 610.99),
             new Equipment("Juwel", 45, 45, 45, "Black", "50 kg", 1002, "Juwel Cube 45", "Great Beginnner tank which wont take up much space, great quality for a great price", 200.00)
         };
+
 
         // GET: EquipmentController
         public ActionResult Index()

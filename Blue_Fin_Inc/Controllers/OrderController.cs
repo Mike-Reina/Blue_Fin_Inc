@@ -10,8 +10,17 @@ namespace Blue_Fin_Inc.Controllers
 {
     public class OrderController : Controller
     {
-        //Static field
-        private static Order newOrder = new Order("D14F653", "+3538304927");
+        //DB field
+        private readonly ApplicationContext db;
+
+        //Constructor
+        public OrderController()
+        {
+            db = new ApplicationContext();
+
+            db.Database.EnsureCreated();
+
+        }
         
         //MVC Controller Methods
         
@@ -20,11 +29,11 @@ namespace Blue_Fin_Inc.Controllers
         {
             Livestock livestock1 = new Livestock(CareLevel.Easy, Temperment.Peaceful, WaterType.Fresh, "Black, Silver, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "5cm", 2001, "Harlequin Rasbora", "The Harlequin Rasbora is easily identified by its characteristic black pork chop shaped patch and beautifully lustrous copper/orange body", 2.99);
             Equipment equipment1 = new Equipment("Juwel", 92, 41, 55, "Black", "50 kg", 1001, "Juwel Vision 180", "Painstaking workmanship from Germany, top - quality materials and perfectly tuned technology guarantee the very best of quality and safety, meaning a long service life for your new aquarium.", 610.99);
-            
-            newOrder.AddProduct(livestock1);
-            newOrder.AddProduct(equipment1);
+
+            db.Livestocks.Add(livestock1);
+            db.Equipments.Add(equipment1);
            
-            return View(newOrder);
+            return View();
         }
 
         

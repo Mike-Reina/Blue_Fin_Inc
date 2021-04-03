@@ -10,6 +10,18 @@ namespace Blue_Fin_Inc.Controllers
 {
     public class LivestockController : Controller
     {
+        //DB field
+        private readonly ApplicationContext db;
+
+        //Constructor
+        public LivestockController()
+        {
+            db = new ApplicationContext();
+
+            db.Database.EnsureCreated();
+        }
+
+
         static List<Livestock> LivestockList = new List<Livestock>()
         {
             new Livestock(CareLevel.Easy, Temperment.Peaceful, WaterType.Fresh, "Black, Silver, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "5cm", 2001, "Harlequin Rasbora", "The Harlequin Rasbora is easily identified by its characteristic black pork chop shaped patch and beautifully lustrous copper/orange body", 2.99),
