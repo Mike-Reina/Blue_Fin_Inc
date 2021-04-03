@@ -4,7 +4,7 @@
     ViewData["Title"] = "Order Details";
 }
 @{ 
-    if (Model.OrderPrice > 0)
+    if (Model.ContactNo != null)
     {
         <div>
             <h3>Order Summary</h3>
@@ -89,7 +89,7 @@
     else
     {
         <div>
-            <h4>No products have been added to the order, please create an order here:</h4>
+            <h4>No products have been added to the order, please create an order here first:</h4>
             @Html.ActionLink("Create Order", "Check")
         </div>
     }
