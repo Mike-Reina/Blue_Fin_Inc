@@ -8,8 +8,8 @@ namespace Blue_Fin_Inc.Models
     public class CartLivestock : Livestock
     {
         // Constructor
-        public CartLivestock(CareLevel _careLevel, Temperment _temperment, WaterType _waterType, string _colours, string _waterConditions, string _maxSize, int _productCode, string _name, string _discription, double _price) : 
-            base(_careLevel, _temperment, _waterType, _colours, _waterConditions, _maxSize, _productCode, _name, _discription, _price)
+        public CartLivestock(CareLevel _careLevel, Temperment _temperment, WaterType _waterType, string _colours, string _waterConditions, string _maxSize, string _name, string _discription, double _price) : 
+            base(_careLevel, _temperment, _waterType, _colours, _waterConditions, _maxSize, _name, _discription, _price)
         {
             
         }

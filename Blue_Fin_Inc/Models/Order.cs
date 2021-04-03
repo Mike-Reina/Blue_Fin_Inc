@@ -22,7 +22,7 @@ namespace Blue_Fin_Inc.Models
         public int OrderNo { get; set; }
 
         [Required]
-        [RegularExpression(@"?:^[AC-FHKNPRTV-Y][0-9]{2}|D6W)[ -]?[0-9AC-FHKNPRTV-Y]{4}$")] 
+        //[RegularExpression(@"?:^[AC-FHKNPRTV-Y][0-9]{2}|D6W)[ -]?[0-9AC-FHKNPRTV-Y]{4}$")] 
         public string Eircode { get; set; }
 
         [Required]
@@ -37,15 +37,11 @@ namespace Blue_Fin_Inc.Models
         public double OrderPrice { get; set; }
 
         [Required]
-        [Range(typeof(bool), "No", "Yes", ErrorMessage = "You must indicate if the order contains livestock or not!")] //incase no and yes does not work we can replace it with 0, 1
+        //[Range(typeof(bool), "No", "Yes", ErrorMessage = "You must indicate if the order contains livestock or not!")] //incase no and yes does not work we can replace it with 0, 1
         [DisplayName("Does the order contain livestock?")]
         public bool ContainsLivestock { get; set; }
 
-        //Default Constructor
-        public Order()
-        {
-
-        }
+        
 
         //Constructor
         public Order(string eircode_in, string contactNo_in)
@@ -56,6 +52,11 @@ namespace Blue_Fin_Inc.Models
             OrderPrice = 0;
             ContainsLivestock = false;
 
+            prodList = new List<Product>();
+        }
+
+        public Order()
+        {
             prodList = new List<Product>();
         }
 

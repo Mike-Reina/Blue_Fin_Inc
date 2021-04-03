@@ -80,9 +80,8 @@ namespace Blue_Fin_Inc.Models
         }
 
         // constructor 
-        public Product(int _productCode, string _name, string _description, double _price)
+        public Product(string _name, string _description, double _price)
         {
-            ProductCode = _productCode;
             Name = _name;
             Description = _description;
             Stock = 0;

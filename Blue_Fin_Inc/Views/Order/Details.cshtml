@@ -3,84 +3,94 @@
 @{
     ViewData["Title"] = "Order Details";
 }
+@{ 
+    if (Model.OrderPrice > 0)
+    {
+        <div>
+            <h3>Order Summary</h3>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.OrderNo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.OrderNo)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Eircode)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Eircode)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ContactNo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ContactNo)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.OrderPrice)
+                </dt>
+                <dd class="col-sm-10">
+                    @{
+                        var temp = (Math.Truncate(Model.OrderPrice * 100) / 100).ToString("n2");
+                        @Html.DisplayFor(model => temp)
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ContainsLivestock)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ContainsLivestock)
+                </dd>
+            </dl>
+        </div>
 
-<div>
-    <h3>Order Summary</h3>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderNo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OrderNo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Eircode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Eircode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ContactNo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ContactNo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderPrice)
-        </dt>
-        <dd class="col-sm-10">
-            @{
-                var temp = (Math.Truncate(Model.OrderPrice * 100) / 100).ToString("n2");
-                @Html.DisplayFor(model => temp)
-            }
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ContainsLivestock)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ContainsLivestock)
-        </dd>
-    </dl>
-</div>
-
-<h5 id="orderHeader">Items in the Order</h5>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Quantity
-            </th>
-            <th>
-                Price
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.prodList)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Stock)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
+        <h5 id="orderHeader">Items in the Order</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.prodList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Stock)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div>
+            <h4>No products have been added to the order, please create an order here:</h4>
+            @Html.ActionLink("Create Order", "Check")
+        </div>
+    }
+}

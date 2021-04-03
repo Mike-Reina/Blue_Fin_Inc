@@ -13,6 +13,8 @@ namespace Blue_Fin_Inc.Controllers
         //DB field
         private readonly ApplicationContext db;
 
+        public static Order order1 = new Order();
+
         //Constructor
         public OrderController()
         {
@@ -27,13 +29,13 @@ namespace Blue_Fin_Inc.Controllers
         // GET: OrderController/Details/5
         public ActionResult Details()
         {
-            Livestock livestock1 = new Livestock(CareLevel.Easy, Temperment.Peaceful, WaterType.Fresh, "Black, Silver, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "5cm", 2001, "Harlequin Rasbora", "The Harlequin Rasbora is easily identified by its characteristic black pork chop shaped patch and beautifully lustrous copper/orange body", 2.99);
-            Equipment equipment1 = new Equipment("Juwel", 92, 41, 55, "Black", "50 kg", 1001, "Juwel Vision 180", "Painstaking workmanship from Germany, top - quality materials and perfectly tuned technology guarantee the very best of quality and safety, meaning a long service life for your new aquarium.", 610.99);
+            //Livestock livestock1 = new Livestock(CareLevel.Easy, Temperment.Peaceful, WaterType.Fresh, "Black, Silver, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "5cm", 2001, "Harlequin Rasbora", "The Harlequin Rasbora is easily identified by its characteristic black pork chop shaped patch and beautifully lustrous copper/orange body", 2.99);
+            //Equipment equipment1 = new Equipment("Juwel", 92, 41, 55, "Black", "50 kg", 1001, "Juwel Vision 180", "Painstaking workmanship from Germany, top - quality materials and perfectly tuned technology guarantee the very best of quality and safety, meaning a long service life for your new aquarium.", 610.99);
 
-            db.Livestocks.Add(livestock1);
-            db.Equipments.Add(equipment1);
+            //db.Livestocks.Add(livestock1);
+            //db.Equipments.Add(equipment1);
            
-            return View();
+            return View(order1);
         }
 
         
@@ -52,17 +54,17 @@ namespace Blue_Fin_Inc.Controllers
         // POST: OrderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Order order, int id)
         {
-            try
+            if (order1.ContactNo == null)
             {
-                return RedirectToAction(nameof(Index));
+                order1.ContactNo = order.ContactNo;
+                order1.Eircode = order.Eircode;
+                order1.ContainsLivestock = false;
             }
-            catch
-            {
-                return View();
-            }
-        }
+
+            return RedirectToAction("Index", "Livestock");
+         }
 
         // GET: OrderController/Edit/5
         public ActionResult Edit(int id)
@@ -70,6 +72,21 @@ namespace Blue_Fin_Inc.Controllers
             return View();
         }
 
+        public ActionResult Check(int id)
+        {
+            if (order1.ContactNo == null)
+            {
+                return RedirectToAction("Create");
+            }
+            else
+            {
+                var productFound = db.Livestocks.FirstOrDefault(p => p.ProductCode == id);
+
+                order1.AddProduct(productFound);
+
+                return RedirectToAction("Index", "Livestock");
+            }
+        }
         // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]

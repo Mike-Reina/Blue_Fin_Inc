@@ -1,6 +1,7 @@
 ﻿using Blue_Fin_Inc.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,17 +23,11 @@ namespace Blue_Fin_Inc.Controllers
             db.SeedDB();
         }
 
-
-        static List<Livestock> LivestockList = new List<Livestock>()
-        {
-            new Livestock(CareLevel.Easy, Temperment.Peaceful, WaterType.Fresh, "Black, Silver, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "5cm", 2001, "Harlequin Rasbora", "The Harlequin Rasbora is easily identified by its characteristic black pork chop shaped patch and beautifully lustrous copper/orange body", 2.99),
-            new Livestock(CareLevel.Easy, Temperment.Aggressive, WaterType.Fresh, "Black, Blue, Red", "PH:6.0-6.5, KH 0-10, 22°C-26°C", "7.5cm", 2002, "Crown Tail Betta", "The Crown Tail Betta has a striking, elaborate tail that differentiates it from other Bettas. The Crown Tail has a teardrop shape to its tail while the Twin Tail is split, almost giving the suggestion of having two tails.", 19.99)
-        };
-
         // GET: LivestockController
-        public ActionResult Index(List<Livestock> LivestockList)
+        public async Task<IActionResult> Index()
         {
-            return View(LivestockList);
+            var list = await db.Livestocks.ToListAsync();
+            return View(list);
         }
 
         [HttpGet]
@@ -40,19 +35,19 @@ namespace Blue_Fin_Inc.Controllers
         {
             ViewData["GetLivestockDetails"] = LiveSearch;
 
-            var EquQuery = from p in LivestockList select p;
+            var LiveQuery = from p in db.Livestocks select p;
 
             if (!String.IsNullOrEmpty(LiveSearch))
             {
-                EquQuery = EquQuery.Where(p => p.Name.Contains(LiveSearch) || p.Description.Contains(LiveSearch));
+                LiveQuery = LiveQuery.Where(p => p.Name.Contains(LiveSearch) || p.Description.Contains(LiveSearch));
             }
-            return View(EquQuery);
+            return View(await LiveQuery.AsNoTracking().ToListAsync());
         }
 
         // GET: LivestockController/Details/5
         public ActionResult Details(int id)
         {
-            Livestock foundLivestock = LivestockList.FirstOrDefault(p => p.ProductCode == id);
+            Livestock foundLivestock = db.Livestocks.FirstOrDefault(p => p.ProductCode == id);
             if (foundLivestock != null)
             {
                 return View(foundLivestock);
@@ -76,12 +71,13 @@ namespace Blue_Fin_Inc.Controllers
         {
             if (ModelState.IsValid)
             {
-                LivestockList.Add(newLivestock);
-                return View("Index", LivestockList);
+                db.Livestocks.Add(newLivestock);
+                db.SaveChanges();
+                return View("Index", db.Livestocks);
             }
             else
             {
-                return View("Index", LivestockList);
+                return View("Index", db.Livestocks);
             }
         }
 
@@ -101,7 +97,7 @@ namespace Blue_Fin_Inc.Controllers
                 return NotFound();
             }
 
-            var item = LivestockList.Where(p => p.ProductCode == id);
+            var item = db.Livestocks.Where(p => p.ProductCode == id);
             if (item == null)
             {
                 return NotFound();
