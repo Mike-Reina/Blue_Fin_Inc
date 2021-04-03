@@ -58,7 +58,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.CareLevel)
@@ -94,7 +95,7 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Add to Order", "AddProd", new { /* id=item.PrimaryKey */ })                 
+                @Html.ActionLink("Add to Order", "Check", "Order", new {id=item.ProductCode, productType = "Livestock" })                 
             </td>
         </tr>
 }

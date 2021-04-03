@@ -1,6 +1,7 @@
 ﻿using Blue_Fin_Inc.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,19 +23,11 @@ namespace Blue_Fin_Inc.Controllers
             db.SeedDB();
         }
 
-
-        static List<Equipment> EquipmentList = new List<Equipment>()
-        {
-            new Equipment("Juwel", 92, 41, 55, "Black", "50 kg", 1001, "Juwel Vision 180", "Painstaking workmanship from Germany, top - quality materials and perfectly tuned technology guarantee the very best of quality and safety, meaning a long service life for your new aquarium.", 610.99),
-            new Equipment("Juwel", 45, 45, 45, "Black", "50 kg", 1002, "Juwel Cube 45", "Great Beginnner tank which wont take up much space, great quality for a great price", 200.00)
-        };
-
-
         // GET: EquipmentController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            
-            return View(EquipmentList);
+            var list = await db.Equipments.ToListAsync();
+            return View(list);
         }
 
         [HttpGet]
@@ -42,19 +35,19 @@ namespace Blue_Fin_Inc.Controllers
         {
             ViewData["GetEquipmentDetails"] = EquSearch;
 
-            var EquQuery = from p in EquipmentList select p;
+            var EquQuery = from p in db.Equipments select p;
 
             if (!String.IsNullOrEmpty(EquSearch))
             {
                 EquQuery = EquQuery.Where(p => p.Name.Contains(EquSearch) || p.Description.Contains(EquSearch) || p.Manufacturer.Contains(EquSearch));
             }
-            return View(EquQuery);
+            return View(await EquQuery.AsNoTracking().ToListAsync());
         }
 
         // GET: EquipmentController/Details/5
         public ActionResult Details(int id)
         {
-            Equipment foundEquipment = EquipmentList.FirstOrDefault(p => p.ProductCode == id);
+            Equipment foundEquipment = db.Equipments.FirstOrDefault(p => p.ProductCode == id);
             if (foundEquipment != null)
             {
                 return View(foundEquipment);
@@ -77,12 +70,13 @@ namespace Blue_Fin_Inc.Controllers
         {
             if (ModelState.IsValid)
             {
-                EquipmentList.Add(newEquipment);
-                return View("Index", EquipmentList);
+                db.Equipments.Add(newEquipment);
+                db.SaveChanges();
+                return View("Index", db.Equipments);
             }
             else
             {
-                return View("Index", EquipmentList);
+                return View("Index", db.Equipments);
             }
         }
 
@@ -96,7 +90,7 @@ namespace Blue_Fin_Inc.Controllers
                 return NotFound();
             }
 
-            var item = EquipmentList.Where(p => p.ProductCode == id);
+            var item = db.Equipments.Where(p => p.ProductCode == id);
             if (item == null)
             {
                 return NotFound();
