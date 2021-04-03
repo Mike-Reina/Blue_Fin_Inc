@@ -14,6 +14,11 @@ namespace Blue_Fin_Inc.Models
             
         }
 
+        public CartLivestock(): base()
+        {
+
+        }
+
         // Methods 
         public override void AddStock(int amount)
         {
