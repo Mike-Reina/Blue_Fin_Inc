@@ -19,6 +19,7 @@ namespace Blue_Fin_Inc.Controllers
             db = new ApplicationContext();
 
             db.Database.EnsureCreated();
+            db.SeedDB();
         }
 
 
