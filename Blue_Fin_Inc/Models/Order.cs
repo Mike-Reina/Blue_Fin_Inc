@@ -21,6 +21,13 @@ namespace Blue_Fin_Inc.Models
         [DisplayName("Order Number")]
         public int OrderNo { get; set; }
 
+
+        [Required]
+        [DisplayName("Full Name")]
+        [MaxLength(50, ErrorMessage ="Max Length is 50 characters!")]
+        public string CustomerName { get; set; }
+
+
         [Required]
         //[RegularExpression(@"?:^[AC-FHKNPRTV-Y][0-9]{2}|D6W)[ -]?[0-9AC-FHKNPRTV-Y]{4}$")] 
         public string Eircode { get; set; }
@@ -33,7 +40,7 @@ namespace Blue_Fin_Inc.Models
 
         [Required]
         [Min(0, ErrorMessage = "Order payable amount must be greater than zero!")]
-        [DisplayName("Payable Amount")]
+        [DisplayName("Payable Amount €")]
         public double OrderPrice { get; set; }
 
         [Required]
