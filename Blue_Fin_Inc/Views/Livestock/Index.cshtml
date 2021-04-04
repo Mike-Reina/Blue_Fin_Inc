@@ -95,7 +95,14 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Add to Order", "Check", "Order", new {id=item.ProductCode, productType = "Livestock" })                 
+                @if (item.Stock > 0)
+                {
+                    @Html.ActionLink("Add to Order", "Check", "Order", new { id = item.ProductCode, productType = "Livestock" })
+                }
+                @if (item.Stock == 0)
+                {
+                    @Html.ActionLink("Zero Stock Available", "Index", new { /*id = item.ProductCode, productType = "Livestock" */})
+                }
             </td>
         </tr>
 }
