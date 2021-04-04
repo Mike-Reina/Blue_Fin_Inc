@@ -4,10 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h2>Equipment</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <div class="form-group">
+        <a href="@Url.Action("Create", "Equipment")">
+            <button class="btn btn-primary">Add New Equipment</button>
+        </a>
+    </div>
 </p>
 
 <form method="get" asp-action="Index">
@@ -90,7 +94,10 @@
                 @Html.DisplayFor(modelItem => item.Stock)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @{
+                    var temp = (Math.Truncate(item.Price * 100) / 100).ToString("n2");
+                    @Html.DisplayFor(model => temp)
+                }
             </td>
             <td>
                 @if (item.Stock > 0)

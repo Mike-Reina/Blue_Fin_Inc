@@ -12,6 +12,11 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+#order {
+    padding-top: 1.5em;
+    text-align: center;
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
