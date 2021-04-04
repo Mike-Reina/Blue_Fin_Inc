@@ -14,7 +14,8 @@ namespace Blue_Fin_Inc.Models
     {
         
         //Collection of products
-        public List<Product> prodList;
+        public List<CartLivestock> livestockList;
+        public List<CartEquipment> equipementList;
 
         //Property (ies)
         [Key]
@@ -59,42 +60,79 @@ namespace Blue_Fin_Inc.Models
             OrderPrice = 0;
             ContainsLivestock = false;
 
-            prodList = new List<Product>();
+            livestockList = new List<CartLivestock>();
+            equipementList = new List<CartEquipment>();
         }
 
         public Order()
         {
-            prodList = new List<Product>();
+            livestockList = new List<CartLivestock>();
+            equipementList = new List<CartEquipment>();
         }
 
         //Methods
-        public void AddProduct(Product product_in)
+        public void AddLivestock(Livestock product_in)
         {
-            prodList.Add(product_in);
+            CartLivestock find = livestockList.FirstOrDefault(l => l.ProductCode == product_in.ProductCode);
+            if (find == null)
+            {
+                CartLivestock newOrderProd = new CartLivestock(product_in.CareLevel, product_in.Temperment, product_in.WaterType, product_in.Colours, product_in.WaterConditions, product_in.MaxSize, product_in.Name, product_in.Description, product_in.Price) { ProductCode = product_in.ProductCode};
+                newOrderProd.Stock = 1;
+                livestockList.Add(newOrderProd);
+            }
+            else
+            {
+                find.Stock++;
+            }
+            
             OrderPrice += product_in.Price;
            //Reminder:should create some code to check if the product is livestock so I can set the propert containsLivestock !!!
                 
         }
 
-        public string RemoveProduct(Product product_out)
+        public void AddEquipment(Equipment product_in)
         {
-            //first lets find the product we need to remove from the order
-            Product found = prodList.FirstOrDefault(p=> p.ProductCode == product_out.ProductCode);
-            if(found != null)
+            CartEquipment find = equipementList.FirstOrDefault(l => l.ProductCode == product_in.ProductCode);
+            if (find == null)
             {
-                prodList.Remove(found);
-                OrderPrice -= product_out.Price;
-                if (OrderPrice == 0) // Not entirely sure about this but need to check it further
-                {
-                    return"There are no products in the basket!";
-                }
-                return "Product " + product_out.ProductCode + "was removed from the basket!";
-
-                //Reminder:should create some code to check if remaining products are livestock so I can re-set the property containsLivestock !!!
+                CartEquipment newOrderProd = new CartEquipment(product_in.Manufacturer, product_in.Lenght, product_in.Width, product_in.Height, product_in.Colour, product_in.Weight, product_in.Name, product_in.Description, product_in.Price) { ProductCode = product_in.ProductCode }; 
+                newOrderProd.Stock = 1;
+                equipementList.Add(newOrderProd);
             }
-            return "Product " + product_out.Name + " was not found";
+            else
+            {
+                find.Stock++;
+            }
+            
+            OrderPrice += product_in.Price;
+            //Reminder:should create some code to check if the product is livestock so I can set the propert containsLivestock !!!
 
         }
+
+
+
+
+
+
+        //public string RemoveProduct(Product product_out)
+        //{
+        //    //first lets find the product we need to remove from the order
+        //    Product found = prodList.FirstOrDefault(p=> p.ProductCode == product_out.ProductCode);
+        //    if(found != null)
+        //    {
+        //        prodList.Remove(found);
+        //        OrderPrice -= product_out.Price;
+        //        if (OrderPrice == 0) // Not entirely sure about this but need to check it further
+        //        {
+        //            return"There are no products in the basket!";
+        //        }
+        //        return "Product " + product_out.ProductCode + "was removed from the basket!";
+
+        //        //Reminder:should create some code to check if remaining products are livestock so I can re-set the property containsLivestock !!!
+        //    }
+        //    return "Product " + product_out.Name + " was not found";
+
+        //}
           
     }
 }

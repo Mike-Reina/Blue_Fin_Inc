@@ -77,12 +77,12 @@ namespace Blue_Fin_Inc.Controllers
             {
                 if(productType == "Livestock")
                 {
-                    order1.AddProduct(db.Livestocks.FirstOrDefault(p => p.ProductCode == id));
+                    order1.AddLivestock(db.Livestocks.FirstOrDefault(p => p.ProductCode == id));
                     return RedirectToAction("Index", "Livestock");
                 }
                 else if(productType == "Equipment")
                 {
-                    order1.AddProduct(db.Equipments.FirstOrDefault(p => p.ProductCode == id));
+                    order1.AddEquipment(db.Equipments.FirstOrDefault(p => p.ProductCode == id));
                     return RedirectToAction("Index", "Equipment");
                 }
                 else

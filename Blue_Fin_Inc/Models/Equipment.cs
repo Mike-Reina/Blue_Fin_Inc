@@ -105,7 +105,7 @@ namespace Blue_Fin_Inc.Models
         }
 
         // constructor
-        public Equipment(string _manufacturer, int _lenght, int _width, int _height, string _colour, string _weight, string _name, string _discription, double _price) : base( _name, _discription, _price)
+        public Equipment(string _manufacturer, int _lenght, int _width, int _height, string _colour, string _weight, string _name, string _description, double _price) : base( _name, _description, _price)
         {
             Manufacturer = _manufacturer;
             Lenght = _lenght;
