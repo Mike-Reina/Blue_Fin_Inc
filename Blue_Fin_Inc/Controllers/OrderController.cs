@@ -52,6 +52,7 @@ namespace Blue_Fin_Inc.Controllers
         {
             if (order1.ContactNo == null)
             {
+                order1.CustomerName = order.CustomerName;
                 order1.ContactNo = order.ContactNo;
                 order1.Eircode = order.Eircode;
                 order1.ContainsLivestock = false;
