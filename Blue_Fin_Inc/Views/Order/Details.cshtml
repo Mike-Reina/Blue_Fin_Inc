@@ -88,9 +88,13 @@
     }
     else
     {
-        <div>
-            <h4>No products have been added to the order, please create an order here first:</h4>
-            @Html.ActionLink("Create Order", "Check")
+    <div id="order">
+        <h5>No products have been added to the order, please create an order here first!</h5><br>
+        <div class="form-group">
+            <a href="@Url.Action("Create", "Order")">
+                <button class="btn btn-primary">Create Order</button>
+            </a>
         </div>
+    </div>
     }
 }

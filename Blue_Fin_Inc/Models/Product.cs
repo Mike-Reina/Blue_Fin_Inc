@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -62,6 +63,7 @@ namespace Blue_Fin_Inc.Models
         }
 
         [Required]
+        [DisplayName("Price(€)")]
         public double Price
         { 
             get => price;
