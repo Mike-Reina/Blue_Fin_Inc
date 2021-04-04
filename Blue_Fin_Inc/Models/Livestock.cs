@@ -83,7 +83,7 @@ namespace Blue_Fin_Inc.Models
         }
 
         // constructor
-        public Livestock(CareLevel _careLevel, Temperment _temperment, WaterType _waterType, string _colours, string _waterConditions, string _maxSize, string _name, string _discription, double _price) : base(_name, _discription, _price)
+        public Livestock(CareLevel _careLevel, Temperment _temperment, WaterType _waterType, string _colours, string _waterConditions, string _maxSize, string _name, string _description, double _price) : base(_name, _description, _price)
         {
             CareLevel = _careLevel;
             Temperment = _temperment;
