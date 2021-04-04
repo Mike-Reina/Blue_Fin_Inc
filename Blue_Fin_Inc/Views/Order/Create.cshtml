@@ -4,28 +4,26 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Order</h4>
+<h2>Create Order</h2>
 <hr />
-<h4>No order created we need your details first!</h4>
+<h5>No order created we need your details first!</h5>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CustomerName" class="control-label"></label>
-                <input asp-for="CustomerName" class="form-control" />
+                <input placeholder="Please enter your name" asp-for="CustomerName" class="form-control" />
                 <span asp-validation-for="CustomerName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Eircode" class="control-label"></label>
-                <input asp-for="Eircode" class="form-control" />
+                <input placeholder="Please use upper case letters" asp-for="Eircode" class="form-control" />
                 <span asp-validation-for="Eircode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ContactNo" class="control-label"></label>
-                <input asp-for="ContactNo" class="form-control" />
+                <input placeholder="Please include country code +353"  asp-for="ContactNo" class="form-control" />
                 <span asp-validation-for="ContactNo" class="text-danger"></span>
             </div>
             <div class="form-group">
