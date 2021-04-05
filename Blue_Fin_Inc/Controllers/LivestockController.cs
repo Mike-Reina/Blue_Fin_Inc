@@ -151,25 +151,33 @@ namespace Blue_Fin_Inc.Controllers
         }
 
         // GET: LivestockController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await db.Livestocks.FirstOrDefaultAsync(p => p.ProductCode == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
 
         // POST: LivestockController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ValidateAntiForgeryToken, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var product = await db.Livestocks.FindAsync(id);
+            db.Livestocks.Remove(product);
+            await db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
+
         private bool LivestockExists(int id)
         {
             return db.Livestocks.Any(e => e.ProductCode == id);
