@@ -77,11 +77,16 @@ namespace Blue_Fin_Inc.Models
             {
                 CartLivestock newOrderProd = new CartLivestock(product_in.CareLevel, product_in.Temperment, product_in.WaterType, product_in.Colours, product_in.WaterConditions, product_in.MaxSize, product_in.Name, product_in.Description, product_in.Price) { ProductCode = product_in.ProductCode};
                 newOrderProd.Stock = 1;
+                ContainsLivestock = true;
                 livestockList.Add(newOrderProd);
             }
             else
             {
-                find.Stock++;
+                if(product_in.Stock > find.Stock)
+                {
+                    find.Stock++;
+                }
+
             }
             
             OrderPrice += product_in.Price;
@@ -100,7 +105,10 @@ namespace Blue_Fin_Inc.Models
             }
             else
             {
-                find.Stock++;
+                if (product_in.Stock > find.Stock)
+                {
+                    find.Stock++;
+                }
             }
             
             OrderPrice += product_in.Price;
