@@ -9,7 +9,7 @@ namespace Blue_Fin_Inc.Models
     public class ApplicationContext : DbContext
     {
         //Specify the path to the database - this is a default location we havent specified a specific path
-        private const string connectionString = "Server=(localdb)\\mssqllocaldb;DataBase=BlueFinDB1;Trusted_Connection=False;";
+        private const string connectionString = "Server=(localdb)\\mssqllocaldb;DataBase=BlueFinDB2;Trusted_Connection=False;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {

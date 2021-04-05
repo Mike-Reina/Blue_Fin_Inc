@@ -1,9 +1,11 @@
 ﻿using Blue_Fin_Inc.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,11 +15,12 @@ namespace Blue_Fin_Inc.Controllers
     {
         //DB field
         private readonly ApplicationContext db;
-
+        private readonly IWebHostEnvironment _hostEnvironment;
         //Constructor
-        public LivestockController()
+        public LivestockController(IWebHostEnvironment hostEnvironment)
         {
             db = new ApplicationContext();
+            this._hostEnvironment = hostEnvironment;
 
             db.Database.EnsureCreated();
             db.SeedDB();
@@ -87,10 +90,19 @@ namespace Blue_Fin_Inc.Controllers
         // POST: LivestockController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Livestock newLivestock)
+        public async Task<ActionResult> Create([Bind("CareLevel,Temperment,WaterType,Colours,WaterConditions,MaxSize,ProductCode,Name,Description,Stock,Price,ImageFile")] Livestock newLivestock)
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string filename = Path.GetFileNameWithoutExtension(newLivestock.ImageFile.FileName);
+                string path = Path.Combine(wwwRootPath + "/images/", filename);
+
+                using (var filestream = new FileStream(path,FileMode.Create))
+                {
+                    await newLivestock.ImageFile.CopyToAsync(filestream);
+                }
+
                 db.Livestocks.Add(newLivestock);
                 db.SaveChanges();
                 return View("Index", db.Livestocks);
@@ -120,7 +132,7 @@ namespace Blue_Fin_Inc.Controllers
         // POST: LivestockController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, [Bind("CareLevel,Temperment,WaterType,Colours,WaterConditions,MaxSize,ProductCode,Name,Description,Stock,Price")] Livestock live)
+        public async Task<ActionResult> Edit(int id, [Bind("CareLevel,Temperment,WaterType,Colours,WaterConditions,MaxSize,ProductCode,Name,Description,Stock,Price,ImageFile")] Livestock live)
         {
             if (id != live.ProductCode)
             {
