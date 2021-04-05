@@ -152,24 +152,31 @@ namespace Blue_Fin_Inc.Controllers
         }
 
         // GET: EquipmentController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await db.Equipments.FirstOrDefaultAsync(p => p.ProductCode == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
 
         // POST: EquipmentController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ValidateAntiForgeryToken, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var product = await db.Equipments.FindAsync(id);
+            db.Equipments.Remove(product);
+            await db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool EquipmentExists(int id)
