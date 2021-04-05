@@ -30,10 +30,30 @@ namespace Blue_Fin_Inc.Controllers
             return View(list);
         }
 
+        public async Task<IActionResult> EditIndex()
+        {
+            var list = await db.Equipments.ToListAsync();
+            return View(list);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Index(string EquSearch)
         {
             ViewData["GetEquipmentDetails"] = EquSearch;
+
+            var EquQuery = from p in db.Equipments select p;
+
+            if (!String.IsNullOrEmpty(EquSearch))
+            {
+                EquQuery = EquQuery.Where(p => p.Name.Contains(EquSearch) || p.Description.Contains(EquSearch) || p.Manufacturer.Contains(EquSearch));
+            }
+            return View(await EquQuery.AsNoTracking().ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditIndex(string EquSearch)
+        {
+            ViewData["GetEditEquipmentDetails"] = EquSearch;
 
             var EquQuery = from p in db.Equipments select p;
 
@@ -90,27 +110,45 @@ namespace Blue_Fin_Inc.Controllers
                 return NotFound();
             }
 
-            var item = db.Equipments.Where(p => p.ProductCode == id);
-            if (item == null)
+            Equipment equip = db.Equipments.FirstOrDefault(p => p.ProductCode == id);
+            if (equip == null)
             {
                 return NotFound();
             }
-            return View(item);
+            return View(equip);
         }
 
         // POST: EquipmentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, [Bind("Manufacturer,Lenght,Width,Height,Colour,Weight,ProductCode,Name,Description,Stock,Price")] Equipment equip)
         {
-            try
+            if (id != equip.ProductCode)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Update(equip);
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EquipmentExists(equip.ProductCode))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(equip);
         }
 
         // GET: EquipmentController/Delete/5
@@ -133,5 +171,11 @@ namespace Blue_Fin_Inc.Controllers
                 return View();
             }
         }
+
+        private bool EquipmentExists(int id)
+        {
+            return db.Equipments.Any(e => e.ProductCode == id);
+        }
     }
 }
+

@@ -6,14 +6,6 @@
 
 <h2>Livestock</h2>
 
-<p>
-    <div class="form-group">
-        <a href="@Url.Action("Create", "Livestock")">
-            <button class="btn btn-primary">Add New Livestock</button>
-        </a>
-    </div>
-</p>
-
 <form method="get" asp-action="Index">
     <p>
         <input type="search" placeholder="Enter Livestock Search Term... " value="@ViewData["GetLivestockDetails"]" name="LiveSearch" style="width:500px" />
