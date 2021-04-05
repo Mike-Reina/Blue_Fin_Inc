@@ -81,7 +81,11 @@ namespace Blue_Fin_Inc.Models
             }
             else
             {
-                find.Stock++;
+                if(product_in.Stock > find.Stock)
+                {
+                    find.Stock++;
+                }
+
             }
             
             OrderPrice += product_in.Price;
@@ -100,7 +104,10 @@ namespace Blue_Fin_Inc.Models
             }
             else
             {
-                find.Stock++;
+                if (product_in.Stock > find.Stock)
+                {
+                    find.Stock++;
+                }
             }
             
             OrderPrice += product_in.Price;

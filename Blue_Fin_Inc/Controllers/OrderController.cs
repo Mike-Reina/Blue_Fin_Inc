@@ -56,6 +56,9 @@ namespace Blue_Fin_Inc.Controllers
                 order1.ContactNo = order.ContactNo;
                 order1.Eircode = order.Eircode;
                 order1.ContainsLivestock = false;
+                order1.livestockList.Clear();
+                order1.equipementList.Clear();
+                order1.OrderPrice = 0; 
             }
 
             return RedirectToAction("Details");
