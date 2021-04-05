@@ -6,18 +6,10 @@
 
 <h2>Equipment</h2>
 
-<p>
-    <div class="form-group">
-        <a href="@Url.Action("Create", "Equipment")">
-            <button class="btn btn-primary">Add New Equipment</button>
-        </a>
-    </div>
-</p>
-
 <form method="get" asp-action="Index">
     <p>
         <input type="search" placeholder="Enter Equipment Search Term... " value="@ViewData["GetEquipmentDetails"]" name="EquSearch" style="width:500px"/>
-        <input type="submit" value ="Search" class="btn btn-primary"/>
+        <input type="submit" value="Search" class="btn btn-primary"/>
         <a asp-action="Index">Back to All Equipment</a>
     </p>
 </form>
@@ -108,6 +100,9 @@
                 {
                     @Html.ActionLink("Zero Stock Available", "Index", new { /*id = item.ProductCode, productType = "Livestock" */})
                 }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductCode">Edit</a>
             </td>
         </tr>
 }

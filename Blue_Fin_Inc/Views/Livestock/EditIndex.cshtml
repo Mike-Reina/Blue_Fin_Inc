@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Blue_Fin_Inc.Models.Livestock>
+
+@{
+    ViewData["Title"] = "EditIndex";
+}
+
+<h2>Modify Livestock</h2>
+
+<p>
+    <div class="form-group">
+        <a href="@Url.Action("Create", "Livestock")">
+            <button class="btn btn-primary">Add New Livestock</button>
+        </a>
+    </div>
+</p>
+
+<form method="get" asp-action="Index">
+    <p>
+        <input type="search" placeholder="Enter Livestock Search Term... " value="@ViewData["GetEditLivestockDetails"]" name="LiveSearch" style="width:500px" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+        <a asp-action="Index">Back to All Livestock</a>
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.ProductCode)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @{
+                    var temp = (Math.Truncate(item.Price * 100) / 100).ToString("n2");
+                    @Html.DisplayFor(model => temp)
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductCode">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductCode">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

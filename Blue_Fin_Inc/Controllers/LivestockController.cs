@@ -30,10 +30,30 @@ namespace Blue_Fin_Inc.Controllers
             return View(list);
         }
 
+        public async Task<IActionResult> EditIndex()
+        {
+            var list = await db.Livestocks.ToListAsync();
+            return View(list);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Index(string LiveSearch)
         {
             ViewData["GetLivestockDetails"] = LiveSearch;
+
+            var LiveQuery = from p in db.Livestocks select p;
+
+            if (!String.IsNullOrEmpty(LiveSearch))
+            {
+                LiveQuery = LiveQuery.Where(p => p.Name.Contains(LiveSearch) || p.Description.Contains(LiveSearch));
+            }
+            return View(await LiveQuery.AsNoTracking().ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditIndex(string LiveSearch)
+        {
+            ViewData["GetEditLivestockDetails"] = LiveSearch;
 
             var LiveQuery = from p in db.Livestocks select p;
 
@@ -84,25 +104,50 @@ namespace Blue_Fin_Inc.Controllers
         // GET: LivestockController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
-        }
-
-        // POST: LivestockController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var item = db.Livestocks.Where(p => p.ProductCode == id);
-            if (item == null)
+            Livestock live = db.Livestocks.FirstOrDefault(p => p.ProductCode == id);
+            if (live == null)
             {
                 return NotFound();
             }
-            return View(item);
+            return View(live);
+        }
+
+        // POST: LivestockController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id, [Bind("CareLevel,Temperment,WaterType,Colours,WaterConditions,MaxSize,ProductCode,Name,Description,Stock,Price")] Livestock live)
+        {
+            if (id != live.ProductCode)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Update(live);
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!LivestockExists(live.ProductCode))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(live);
         }
 
         // GET: LivestockController/Delete/5
@@ -124,6 +169,10 @@ namespace Blue_Fin_Inc.Controllers
             {
                 return View();
             }
+        }
+        private bool LivestockExists(int id)
+        {
+            return db.Livestocks.Any(e => e.ProductCode == id);
         }
     }
 }
