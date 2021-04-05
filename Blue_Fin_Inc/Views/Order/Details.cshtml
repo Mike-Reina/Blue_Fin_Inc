@@ -73,7 +73,7 @@
                         Quantity
                     </th>
                     <th>
-                        Price
+                        Price €
                     </th>
                     <th></th>
                 </tr>
@@ -81,37 +81,49 @@
             <tbody>
                 @foreach (var item in Model.livestockList)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Stock)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stock)
+                    </td>
+                    <td>                                                                  
+                        @{
+                            var temp2 = (Math.Truncate(item.Price * 100) / 100).ToString("n2");
+                            @Html.DisplayFor(model => temp2)
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove item", "Remove", new { id = item.ProductCode, productType = "Livestock" }, new { @class = "deleteLink" })
+                    </td>
+                </tr>
                 }
                 @foreach (var item in Model.equipementList)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Stock)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td>                                                                                                         
+                    @{
+                        var temp3 = (Math.Truncate(item.Price * 100) / 100).ToString("n2");
+                        @Html.DisplayFor(model => temp3)
+                    }                                          
+                </td>
+                <td>
+                    @Html.ActionLink("Remove item", "Remove", new { id = item.ProductCode, productType = "Equipment" }, new { @class = "deleteLink" })
+                </td>
+            </tr>
                 }
             </tbody>
         </table>

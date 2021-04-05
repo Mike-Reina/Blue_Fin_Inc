@@ -71,12 +71,6 @@ namespace Blue_Fin_Inc.Controllers
             return RedirectToAction("Details", order1);
          }
 
-        // GET: OrderController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
         public ActionResult Check(int id, string productType)
         {
             if (order1.ContactNo == null)
@@ -103,6 +97,24 @@ namespace Blue_Fin_Inc.Controllers
             }
         }
 
+        public ActionResult Remove(int id, string productType)
+        {
+            if (productType == "Livestock")
+            {
+                order1.RemoveLivestock(db.Livestocks.FirstOrDefault(p => p.ProductCode == id));
+                return RedirectToAction("Details");
+            }
+            else if (productType == "Equipment")
+            {
+                order1.RemoveEquipment(db.Equipments.FirstOrDefault(p => p.ProductCode == id));
+                return RedirectToAction("Details");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         public async Task<ActionResult> PlaceOrder()
         {
             //Livestock list
@@ -125,6 +137,12 @@ namespace Blue_Fin_Inc.Controllers
             Order lastOrder = findAllOrders.Last();
           
             return RedirectToAction("Details", lastOrder);
+        }
+
+        // GET: OrderController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
         }
 
         // POST: OrderController/Edit/5
