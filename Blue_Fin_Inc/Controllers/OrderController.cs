@@ -32,6 +32,7 @@ namespace Blue_Fin_Inc.Controllers
         {       
             if(orderDB.OrderNo > 0 )
             {
+                order1.OrderNo = 0;
                 return View(orderDB);
             }
             return View(order1);
@@ -117,6 +118,8 @@ namespace Blue_Fin_Inc.Controllers
             }
             db.Orders.Add(order1);
             db.SaveChanges();
+            order1.ContactNo = null;
+            
 
             List<Order> findAllOrders = await db.Orders.ToListAsync();
             Order lastOrder = findAllOrders.Last();
