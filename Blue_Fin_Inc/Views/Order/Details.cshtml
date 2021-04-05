@@ -3,8 +3,28 @@
 @{
     ViewData["Title"] = "Order Details";
 }
-@{ 
-    if (Model.ContactNo != null)
+@*@{
+
+        if (Model.OrderNo > 0)
+        {
+            <div>
+                <h3>Thank you for your order! Your order number is </h3>
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.OrderNo)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.OrderNo)
+                    </dd>
+                </dl>
+            </div>
+        }
+
+    }*@
+
+@{
+
+    if (Model.ContactNo != null && Model.OrderNo == 0)
     {
         <div>
             <h3>Order Summary</h3>
@@ -45,6 +65,17 @@
                 </dd>
             </dl>
         </div>
+
+        if (Model.OrderPrice > 0)
+        {
+            <div id="placeOrder">
+                <div class="form-group">
+                    <a href="@Url.Action("PlaceOrder", "Order")">
+                        <button class="btn btn-primary">Place Order</button>
+                    </a>
+                </div>
+            </div>
+        }
 
         <h5 id="orderHeader">Items in the Order</h5>
         <table class="table">
@@ -103,15 +134,20 @@
             </tbody>
         </table>
     }
+    else if (Model.OrderNo > 0)
+    {
+        <p id="orderConfirmation">Thank you for your order! Your order number is #<strong>@Model.OrderNo </strong></p>
+    }
     else
     {
-    <div id="order">
-        <h5>No products have been added to the order, please create an order here first!</h5><br>
-        <div class="form-group">
-            <a href="@Url.Action("Create", "Order")">
-                <button class="btn btn-primary">Create Order</button>
-            </a>
+        <div id="order">
+            <h5>No products have been added to the order, please create an order here first!</h5><br>
+            <div class="form-group">
+                <a href="@Url.Action("Create", "Order")">
+                    <button class="btn btn-primary">Create Order</button>
+                </a>
+            </div>
         </div>
-    </div>
     }
 }
+

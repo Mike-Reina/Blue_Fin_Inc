@@ -1,6 +1,7 @@
 ﻿using Blue_Fin_Inc.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,14 @@ namespace Blue_Fin_Inc.Controllers
         //MVC Controller Methods
         
         // GET: OrderController/Details/5
-        public ActionResult Details()
-        {        
+        public ActionResult Details(Order orderDB)
+        {       
+            if(orderDB.OrderNo > 0 )
+            {
+                return View(orderDB);
+            }
             return View(order1);
+           
         }
 
         
@@ -60,8 +66,8 @@ namespace Blue_Fin_Inc.Controllers
                 order1.equipementList.Clear();
                 order1.OrderPrice = 0; 
             }
-
-            return RedirectToAction("Details");
+           
+            return RedirectToAction("Details", order1);
          }
 
         // GET: OrderController/Edit/5
@@ -95,6 +101,29 @@ namespace Blue_Fin_Inc.Controllers
                 
             }
         }
+
+        public async Task<ActionResult> PlaceOrder()
+        {
+            //Livestock list
+            foreach (CartLivestock l in order1.livestockList) 
+            {
+                Livestock updateStock = db.Livestocks.FirstOrDefault(p => p.ProductCode == l.ProductCode);
+                updateStock.Stock -= l.Stock;
+            }
+            foreach (CartEquipment e in order1.equipementList)
+            {
+                Equipment updateStock = db.Equipments.FirstOrDefault(p => p.ProductCode == e.ProductCode);
+                updateStock.Stock -= e.Stock;
+            }
+            db.Orders.Add(order1);
+            db.SaveChanges();
+
+            List<Order> findAllOrders = await db.Orders.ToListAsync();
+            Order lastOrder = findAllOrders.Last();
+          
+            return RedirectToAction("Details", lastOrder);
+        }
+
         // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
