@@ -12,7 +12,6 @@ namespace Blue_Fin_Inc.Models
 {
     public class Order
     {
-        
         //Collection of products
         public List<CartLivestock> livestockList;
         public List<CartEquipment> equipementList;
@@ -30,7 +29,7 @@ namespace Blue_Fin_Inc.Models
 
 
         [Required]
-        //[RegularExpression(@"?:^[AC-FHKNPRTV-Y][0-9]{2}|D6W)[ -]?[0-9AC-FHKNPRTV-Y]{4}$")] 
+        [RegularExpression(@"^[ACDEFHKNPRTVWXY]{1}[0-9]{1}[0-9W]{1}[\ \-]?[0-9ACDEFHKNPRTVWXY]{4}$",  ErrorMessage ="Please enter a valid Eircode!")] 
         public string Eircode { get; set; }
 
         [Required]
