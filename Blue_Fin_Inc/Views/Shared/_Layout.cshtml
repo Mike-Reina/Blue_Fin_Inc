@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - Blue Fin Inc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css?family=KoHo" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
     <header>
@@ -41,10 +43,16 @@
             @RenderBody()
         </main>
     </div>
-
+    <br />
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - Blue_Fin_Inc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div id="privacyFacebook">
+            &copy; <span id="year"></span> Blue Fin Inc  <a href="http://www.facebook.com/" target="_blank"> <i class="fab fa-facebook"></i> </a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> 
+            </div>
+            <div id="address">
+                <a href="https://www.google.com/maps/dir/53.3443384,-6.282142/SEAHORSE+AQUARIUMS+UNIT+3%2F4B+WELLTEL+HOUSE+SAINT+JOAN'S+INDUSTRIAL+ESTATE+BALLYMOUNT+ROAD+DUBLIN+22+D22+DP62/" target="_blank">Saint Joans's Industrial Estate, Ballymount Rd, Dublin, D22 DP62 </a>
+                <a href="tel:+35314595650"> +35314595650 </a>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
