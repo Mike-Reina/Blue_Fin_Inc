@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Blue_Fin_Inc.Models.Order>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+
+<h3>Submitted Orders</h3>
+
+<form method="get" asp-action="Index">
+    <p>
+        <input type="search" placeholder="Enter Livestock Search Term... " value="@ViewData["GetOrderDetails"]" name="LiveSearch" style="width:500px" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Eircode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContainsLivestock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Eircode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContainsLivestock)
+            </td>
+            <td>
+                <a id ="editLink" asp-action="Edit" asp-route-id="@item.OrderNo">Edit</a> |
+                <a class="deleteLink" asp-action="Delete" asp-route-id="@item.OrderNo">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

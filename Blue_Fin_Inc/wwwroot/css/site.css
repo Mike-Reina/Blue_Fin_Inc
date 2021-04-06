@@ -7,6 +7,11 @@ td .deleteLink {
     text-decoration: none;
 }
 
+#editLink {
+    font-weight: bold;
+    text-decoration: none;
+}
+
 #orderConfirmation {
     margin-top: 4em;
     margin-bottom: 1rem;
