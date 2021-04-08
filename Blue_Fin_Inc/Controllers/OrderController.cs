@@ -41,9 +41,9 @@ namespace Blue_Fin_Inc.Controllers
 
         
         // GET: OrderController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await db.Orders.ToListAsync());
         }
 
         // GET: OrderController/Create
@@ -51,6 +51,40 @@ namespace Blue_Fin_Inc.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> EditIndex()
+        {
+            return View(await db.Orders.ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index(string LiveSearch)
+        {
+            ViewData["GetOrderDetails"] = LiveSearch;
+
+            var LiveQuery = from o in db.Orders select o;
+
+            if (!String.IsNullOrEmpty(LiveSearch))
+            {
+                LiveQuery = LiveQuery.Where(o => o.CustomerName.Contains(LiveSearch) || o.Eircode.Contains(LiveSearch) || o.ContactNo.Contains(LiveSearch));
+            }
+            return View(await LiveQuery.AsNoTracking().ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditIndex(string LiveSearch)
+        {
+            ViewData["GetEditOrderDetails"] = LiveSearch;
+
+            var LiveQuery = from o in db.Orders select o;
+
+            if (!String.IsNullOrEmpty(LiveSearch))
+            {
+                LiveQuery = LiveQuery.Where(o => o.CustomerName.Contains(LiveSearch) || o.Eircode.Contains(LiveSearch) || o.ContactNo.Contains(LiveSearch));
+            }
+            return View(await LiveQuery.AsNoTracking().ToListAsync());
+        }
+
 
         // POST: OrderController/Create
         [HttpPost]
@@ -129,7 +163,7 @@ namespace Blue_Fin_Inc.Controllers
                 updateStock.Stock -= e.Stock;
             }
             db.Orders.Add(order1);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             order1.ContactNo = null;
             
 
@@ -140,45 +174,83 @@ namespace Blue_Fin_Inc.Controllers
         }
 
         // GET: OrderController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            Order findOrder = await db.Orders.FindAsync(id);
+            if (findOrder == null)
+            {
+                return NotFound();
+            }
+            return View(findOrder);
         }
 
         // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderNo, CustomerName, Eircode, ContactNo, OrderPrice, ContainsLivestock")] Order order)
         {
-            try
+            if(id != order.OrderNo)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                try
+                {
+                    db.Update(order);
+                    await db.SaveChangesAsync();
+                }
+                catch(DbUpdateConcurrencyException)
+                {
+                    if (!OrderExists(order.OrderNo))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
             }
+            return View(order);
+        }
+
+        private bool OrderExists(int id)
+        {
+            return db.Orders.Any(o => o.OrderNo == id);
         }
 
         // GET: OrderController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Order order = await db.Orders.FirstOrDefaultAsync(o=> o.OrderNo== id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
         }
 
         // POST: OrderController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ValidateAntiForgeryToken, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Order findOrder = await db.Orders.FindAsync(id);
+            db.Orders.Remove(findOrder);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }
