@@ -16,6 +16,7 @@ namespace Blue_Fin_Inc.Controllers
         //DB field
         private readonly ApplicationContext db;
         private readonly IWebHostEnvironment _hostEnvironment;
+
         //Constructor
         public LivestockController(IWebHostEnvironment hostEnvironment)
         {
@@ -96,6 +97,8 @@ namespace Blue_Fin_Inc.Controllers
             {
                 string wwwRootPath = _hostEnvironment.WebRootPath;
                 string filename = Path.GetFileNameWithoutExtension(newLivestock.ImageFile.FileName);
+                string extension = Path.GetExtension(newLivestock.ImageFile.FileName);
+                newLivestock.ImageName = filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
                 string path = Path.Combine(wwwRootPath + "/images/", filename);
 
                 using (var filestream = new FileStream(path,FileMode.Create))
@@ -132,7 +135,7 @@ namespace Blue_Fin_Inc.Controllers
         // POST: LivestockController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, [Bind("CareLevel,Temperment,WaterType,Colours,WaterConditions,MaxSize,ProductCode,Name,Description,Stock,Price,ImageFile")] Livestock live)
+        public async Task<ActionResult> Edit(int id, [Bind("CareLevel,Temperment,WaterType,Colours,WaterConditions,MaxSize,ProductCode,Name,Description,Stock,Price,ImageFile,ImageName")] Livestock live)
         {
             if (id != live.ProductCode)
             {
@@ -144,6 +147,7 @@ namespace Blue_Fin_Inc.Controllers
                 try
                 {
                     db.Update(live);
+
                     await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -185,6 +189,14 @@ namespace Blue_Fin_Inc.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await db.Livestocks.FindAsync(id);
+
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath + "/images/" + product.ImageName);
+
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+
             db.Livestocks.Remove(product);
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

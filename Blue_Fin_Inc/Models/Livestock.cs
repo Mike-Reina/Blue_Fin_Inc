@@ -85,6 +85,10 @@ namespace Blue_Fin_Inc.Models
             }
         }
 
+        [Column(TypeName = "nvarchar(100)")]
+        [DisplayName("Image Name")]
+        public string ImageName { get; set; }
+
         [NotMapped]
         [DisplayName("Upload Image")]
         public IFormFile ImageFile { get; set; }
