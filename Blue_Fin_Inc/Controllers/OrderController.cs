@@ -71,20 +71,6 @@ namespace Blue_Fin_Inc.Controllers
             return View(await LiveQuery.AsNoTracking().ToListAsync());
         }
 
-        [HttpGet]
-        public async Task<IActionResult> EditIndex(string LiveSearch)
-        {
-            ViewData["GetEditOrderDetails"] = LiveSearch;
-
-            var LiveQuery = from o in db.Orders select o;
-
-            if (!String.IsNullOrEmpty(LiveSearch))
-            {
-                LiveQuery = LiveQuery.Where(o => o.CustomerName.Contains(LiveSearch) || o.Eircode.Contains(LiveSearch) || o.ContactNo.Contains(LiveSearch));
-            }
-            return View(await LiveQuery.AsNoTracking().ToListAsync());
-        }
-
 
         // POST: OrderController/Create
         [HttpPost]
@@ -245,9 +231,9 @@ namespace Blue_Fin_Inc.Controllers
         // POST: OrderController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int OrderNo)
         {
-            Order findOrder = await db.Orders.FindAsync(id);
+            Order findOrder = await db.Orders.FindAsync(OrderNo);
             db.Orders.Remove(findOrder);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
