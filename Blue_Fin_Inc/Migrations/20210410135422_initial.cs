@@ -2,7 +2,7 @@
 
 namespace Blue_Fin_Inc.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,6 +18,7 @@ namespace Blue_Fin_Inc.Migrations
                     Height = table.Column<int>(type: "int", nullable: false),
                     Colour = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Weight = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageName = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
@@ -40,6 +41,7 @@ namespace Blue_Fin_Inc.Migrations
                     Colours = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WaterConditions = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaxSize = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageName = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),

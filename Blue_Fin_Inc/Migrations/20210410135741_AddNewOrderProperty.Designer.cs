@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blue_Fin_Inc.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20210405154706_FirstChange")]
-    partial class FirstChange
+    [Migration("20210410135741_AddNewOrderProperty")]
+    partial class AddNewOrderProperty
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,9 @@ namespace Blue_Fin_Inc.Migrations
 
                     b.Property<int>("Height")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Lenght")
                         .HasColumnType("int");
@@ -84,6 +87,9 @@ namespace Blue_Fin_Inc.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("MaxSize")
                         .IsRequired()
@@ -136,6 +142,9 @@ namespace Blue_Fin_Inc.Migrations
 
                     b.Property<string>("Eircode")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderDetails")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("OrderPrice")

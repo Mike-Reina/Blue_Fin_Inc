@@ -21,30 +21,39 @@ namespace Blue_Fin_Inc.Controllers
         {
             db = new ApplicationContext();
 
-            db.Database.EnsureCreated();
+            db.Database.Migrate();
 
         }
         
         //MVC Controller Methods
         
-        // GET: OrderController/Details/5
+        // GET: OrderController/Details/
         public ActionResult Details(Order orderDB)
         {       
             if(orderDB.OrderNo > 0 )
             {
                 order1.OrderNo = 0;
+                order1.OrderDetails = "";
                 return View(orderDB);
             }
             return View(order1);
            
         }
 
-        
-        // GET: OrderController
-        public async Task<IActionResult> Index()
+        // GET: OrderController/ShowOrderDetails/5
+        public ActionResult ShowOrderDetails(int id)
         {
-            return View(await db.Orders.ToListAsync());
+            Order findOrder = db.Orders.FirstOrDefault(o => o.OrderNo == id );
+            if (findOrder != null)
+            {
+                return View(findOrder);
+            }
+            else
+            {
+                return NotFound("No order found with order number # " + id + "!");
+            }
         }
+
 
         // GET: OrderController/Create
         public ActionResult Create()
@@ -52,23 +61,25 @@ namespace Blue_Fin_Inc.Controllers
             return View();
         }
 
-        public async Task<IActionResult> EditIndex()
-        {
-            return View(await db.Orders.ToListAsync());
-        }
-
         [HttpGet]
         public async Task<IActionResult> Index(string LiveSearch)
         {
-            ViewData["GetOrderDetails"] = LiveSearch;
-
-            var LiveQuery = from o in db.Orders select o;
-
-            if (!String.IsNullOrEmpty(LiveSearch))
+            if (LiveSearch!= null)
             {
-                LiveQuery = LiveQuery.Where(o => o.CustomerName.Contains(LiveSearch) || o.Eircode.Contains(LiveSearch) || o.ContactNo.Contains(LiveSearch));
+                ViewData["GetOrderDetails"] = LiveSearch;
+
+                var LiveQuery = from o in db.Orders select o;
+
+                if (!String.IsNullOrEmpty(LiveSearch))
+                {
+                    LiveQuery = LiveQuery.Where(o => o.CustomerName.Contains(LiveSearch) || o.Eircode.Contains(LiveSearch) || o.ContactNo.Contains(LiveSearch));
+                }
+                return View(await LiveQuery.AsNoTracking().ToListAsync());
             }
-            return View(await LiveQuery.AsNoTracking().ToListAsync());
+           
+            var ordered = from o in db.Orders select o;
+            ordered = ordered.OrderBy(o => o.CustomerName);
+            return View(await ordered.ToListAsync());
         }
 
 
@@ -137,16 +148,25 @@ namespace Blue_Fin_Inc.Controllers
 
         public async Task<ActionResult> PlaceOrder()
         {
-            //Livestock list
+            if(order1.livestockList.Count > 0)
+            {
+                order1.OrderDetails += "|| Livestock Items " + Environment.NewLine;
+            }
             foreach (CartLivestock l in order1.livestockList) 
             {
                 Livestock updateStock = db.Livestocks.FirstOrDefault(p => p.ProductCode == l.ProductCode);
                 updateStock.Stock -= l.Stock;
+                order1.OrderDetails += " -- Product Code: " + l.ProductCode + ", Name: " + l.Name + ", Qty: " + l.Stock + Environment.NewLine;
+            }
+            if (order1.equipementList.Count > 0)
+            {
+                order1.OrderDetails += " || Equipment Items " + Environment.NewLine;
             }
             foreach (CartEquipment e in order1.equipementList)
             {
                 Equipment updateStock = db.Equipments.FirstOrDefault(p => p.ProductCode == e.ProductCode);
                 updateStock.Stock -= e.Stock;
+                order1.OrderDetails += " -- Product Code: " + e.ProductCode + ", Name: " + e.Name + ", Qty: " + e.Stock + Environment.NewLine;
             }
             db.Orders.Add(order1);
             await db.SaveChangesAsync();
@@ -178,7 +198,7 @@ namespace Blue_Fin_Inc.Controllers
         // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderNo, CustomerName, Eircode, ContactNo, OrderPrice, ContainsLivestock")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderNo, CustomerName, Eircode, ContactNo, OrderPrice, ContainsLivestock, OrderDetails")] Order order)
         {
             if(id != order.OrderNo)
             {
