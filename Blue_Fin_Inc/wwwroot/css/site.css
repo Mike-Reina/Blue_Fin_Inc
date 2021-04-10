@@ -7,6 +7,18 @@ td .deleteLink {
     text-decoration: none;
 }
 
+div .addLink {
+    color: #228B22;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+div .backLink {
+    color: #0366d6;
+    font-weight: bold;
+    text-decoration: none;
+}
+
 #editLink {
     font-weight: bold;
     text-decoration: none;
@@ -20,8 +32,6 @@ td .deleteLink {
 }
 #address {
     text-align: center;
-    text-decoration: none;
-    margin-top: -1.2em;
 }
 
 #address a {
@@ -31,6 +41,8 @@ td .deleteLink {
 
 #privacyFacebook {
     text-align: center;
+    text-decoration: none;
+    margin-top: -1.2em;
 }
 
 #orderHeader {

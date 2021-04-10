@@ -23,34 +23,22 @@
                 @Html.DisplayNameFor(model => model.Manufacturer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Lenght)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Width)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Height)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Colour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Weight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductCode)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Stock)
+                @Html.DisplayNameFor(model => model.Colour)
+            </th>
+            <th style="width:100px">
+                L x W x H
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Stock)
             </th>
             <th></th>
         </tr>
@@ -60,38 +48,14 @@
         <tr>
             <td>
                 <a href="@("http://localhost:32679/Equipment/Details/" + item.ProductCode)">
-                    <img src="@("~/images/"+item.ImageName)" asp-append-version="true" width="150px" height="150px" />
+                    <img src="@("~/images/" + item.ImageName)" asp-append-version="true" width="150px" height="150px" />
                 </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Manufacturer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Lenght)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Width)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Height)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Colour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductCode)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
             </td>
             <td>
                 @{
@@ -100,9 +64,21 @@
                 }
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Colour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lenght) x @Html.DisplayFor(modelItem => item.Width) x @Html.DisplayFor(modelItem => item.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
                 @if (item.Stock > 0)
                 {
-                    @Html.ActionLink("Add to Order", "Check", "Order", new { id = item.ProductCode, productType = "Equipment" })
+                    <a class="addLink" href="/Order/Check/5?productType=Equipment">Add to Order</a>
                 }
                 @if (item.Stock == 0)
                 {
