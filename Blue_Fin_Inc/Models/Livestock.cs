@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -81,6 +84,14 @@ namespace Blue_Fin_Inc.Models
                     maxSize = value;
             }
         }
+
+        [Column(TypeName = "nvarchar(100)")]
+        [DisplayName("Image Name")]
+        public string ImageName { get; set; }
+
+        [NotMapped]
+        [DisplayName("Upload Image")]
+        public IFormFile ImageFile { get; set; }
 
         // constructor
         public Livestock(CareLevel _careLevel, Temperment _temperment, WaterType _waterType, string _colours, string _waterConditions, string _maxSize, string _name, string _description, double _price) : base(_name, _description, _price)

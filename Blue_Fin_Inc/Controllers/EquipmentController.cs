@@ -1,9 +1,11 @@
 ﻿using Blue_Fin_Inc.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,11 +15,13 @@ namespace Blue_Fin_Inc.Controllers
     {
         //DB field
         private readonly ApplicationContext db;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
         //Constructor
-        public EquipmentController()
+        public EquipmentController(IWebHostEnvironment hostEnvironment)
         {
             db = new ApplicationContext();
+            this._hostEnvironment = hostEnvironment;
 
             db.Database.EnsureCreated();
             db.SeedDB();
@@ -86,10 +90,21 @@ namespace Blue_Fin_Inc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Equipment newEquipment)
+        public async Task<ActionResult> Create([Bind("Manufacturer,Lenght,Width,Height,Colour,Weight,ProductCode,Name,Description,Stock,Price,ImageFile")] Equipment newEquipment)
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string filename = Path.GetFileNameWithoutExtension(newEquipment.ImageFile.FileName);
+                string extension = Path.GetExtension(newEquipment.ImageFile.FileName);
+                newEquipment.ImageName = filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                string path = Path.Combine(wwwRootPath + "/images/", filename);
+
+                using (var filestream = new FileStream(path, FileMode.Create))
+                {
+                    await newEquipment.ImageFile.CopyToAsync(filestream);
+                }
+
                 db.Equipments.Add(newEquipment);
                 db.SaveChanges();
                 return View("Index", db.Equipments);
@@ -121,7 +136,7 @@ namespace Blue_Fin_Inc.Controllers
         // POST: EquipmentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, [Bind("Manufacturer,Lenght,Width,Height,Colour,Weight,ProductCode,Name,Description,Stock,Price")] Equipment equip)
+        public async Task<ActionResult> Edit(int id, [Bind("Manufacturer,Lenght,Width,Height,Colour,Weight,ProductCode,Name,Description,Stock,Price,ImageFile,ImageName")] Equipment equip)
         {
             if (id != equip.ProductCode)
             {
@@ -174,6 +189,14 @@ namespace Blue_Fin_Inc.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await db.Equipments.FindAsync(id);
+
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath + "/images/" + product.ImageName);
+
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+
             db.Equipments.Remove(product);
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
