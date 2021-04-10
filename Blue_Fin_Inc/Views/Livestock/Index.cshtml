@@ -74,7 +74,7 @@
             <td>
                 @if (item.Stock > 0)
                 {
-                    @Html.ActionLink("Add to Order", "Check", "Order", new { id = item.ProductCode, productType = "Livestock" })
+                    <a class="addLink" href="/Order/Check/5?productType=Livestock">Add to Order</a>
                 }
                 @if (item.Stock == 0)
                 {
