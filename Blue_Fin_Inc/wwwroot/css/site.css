@@ -20,8 +20,6 @@ td .deleteLink {
 }
 #address {
     text-align: center;
-    text-decoration: none;
-    margin-top: -1.2em;
 }
 
 #address a {
@@ -31,6 +29,8 @@ td .deleteLink {
 
 #privacyFacebook {
     text-align: center;
+    text-decoration: none;
+    margin-top: -1.2em;
 }
 
 #orderHeader {

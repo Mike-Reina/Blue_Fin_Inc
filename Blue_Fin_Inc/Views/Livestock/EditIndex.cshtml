@@ -14,11 +14,11 @@
     </div>
 </p>
 
-<form method="get" asp-action="Index">
+<form method="get" asp-action="EditIndex">
     <p>
         <input type="search" placeholder="Enter Livestock Search Term... " value="@ViewData["GetEditLivestockDetails"]" name="LiveSearch" style="width:500px" />
         <input type="submit" value="Search" class="btn btn-primary" />
-        <a asp-action="Index">Back to All Livestock</a>
+        <a asp-action="EditIndex">Back to All Livestock</a>
     </p>
 </form>
 
@@ -65,8 +65,8 @@
                 }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductCode">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductCode">Delete</a>
+                <a id ="editLink" asp-action="Edit" asp-route-id="@item.ProductCode">Edit</a> |
+                <a class="deleteLink" asp-action="Delete" asp-route-id="@item.ProductCode">Delete</a>
             </td>
         </tr>
 }
