@@ -142,6 +142,9 @@ namespace Blue_Fin_Inc.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OrderDetails")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("OrderPrice")
                         .HasColumnType("float");
 

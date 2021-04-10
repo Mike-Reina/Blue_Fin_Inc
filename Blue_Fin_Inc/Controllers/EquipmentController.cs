@@ -23,7 +23,7 @@ namespace Blue_Fin_Inc.Controllers
             db = new ApplicationContext();
             this._hostEnvironment = hostEnvironment;
 
-            db.Database.EnsureCreated();
+            db.Database.Migrate();
             db.SeedDB();
         }
 

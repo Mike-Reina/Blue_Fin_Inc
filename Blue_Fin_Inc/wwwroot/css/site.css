@@ -24,6 +24,12 @@ div .backLink {
     text-decoration: none;
 }
 
+#detailsLink {
+    font-weight: bold;
+    text-decoration: none;
+    color: #4BF300;
+}
+
 #orderConfirmation {
     margin-top: 4em;
     margin-bottom: 1rem;

@@ -19,14 +19,14 @@ namespace Blue_Fin_Inc.Models
         //We need the Dbset property to maniputlate the entries in the models
         public DbSet<Livestock> Livestocks { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
-      
+
         public DbSet<Order> Orders { get; set; }
 
         //Seeding to the DB method
         public void SeedDB()
         {
             ApplicationContext db = new ApplicationContext();
-            db.Database.EnsureCreated();
+            db.Database.Migrate();
             if (db.Livestocks.Count() == 0)
             {
                 List<Livestock> LivestockList = new List<Livestock>()
@@ -52,14 +52,14 @@ namespace Blue_Fin_Inc.Models
                 }
                 db.SaveChanges();
             }
+           
+
         }
 
+
+
+
     }
-
-  
-  
-
-
 
 
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace Blue_Fin_Inc.Models
 
 
         [Required]
-        [DisplayName("Full Name")]
+        [DisplayName("Customer Name")]
         [MaxLength(50, ErrorMessage ="Max Length is 50 characters!")]
         public string CustomerName { get; set; }
 
@@ -44,11 +45,12 @@ namespace Blue_Fin_Inc.Models
         public double OrderPrice { get; set; }
 
         [Required]
-        //[Range(typeof(bool), "No", "Yes", ErrorMessage = "You must indicate if the order contains livestock or not!")] //incase no and yes does not work we can replace it with 0, 1
         [DisplayName("Does the order contain livestock?")]
         public bool ContainsLivestock { get; set; }
 
-        
+        [DisplayName("Products Ordered")]
+        public string OrderDetails { get; set; }
+
 
         //Constructor
         public Order(string eircode_in, string contactNo_in)
@@ -58,6 +60,8 @@ namespace Blue_Fin_Inc.Models
             ContactNo = contactNo_in;
             OrderPrice = 0;
             ContainsLivestock = false;
+            OrderDetails = "";
+          
 
             livestockList = new List<CartLivestock>();
             equipementList = new List<CartEquipment>();
@@ -65,6 +69,7 @@ namespace Blue_Fin_Inc.Models
 
         public Order()
         {
+            OrderDetails ="";
             livestockList = new List<CartLivestock>();
             equipementList = new List<CartEquipment>();
         }

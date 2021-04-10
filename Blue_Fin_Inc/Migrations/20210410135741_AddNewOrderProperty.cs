@@ -2,22 +2,22 @@
 
 namespace Blue_Fin_Inc.Migrations
 {
-    public partial class ThirdChange : Migration
+    public partial class AddNewOrderProperty : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "ImageName",
-                table: "Equipments",
-                type: "nvarchar(100)",
+                name: "OrderDetails",
+                table: "Orders",
+                type: "nvarchar(max)",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ImageName",
-                table: "Equipments");
+                name: "OrderDetails",
+                table: "Orders");
         }
     }
 }

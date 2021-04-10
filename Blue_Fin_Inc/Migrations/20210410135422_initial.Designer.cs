@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blue_Fin_Inc.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20210408175040_ThirdChange")]
-    partial class ThirdChange
+    [Migration("20210410135422_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
