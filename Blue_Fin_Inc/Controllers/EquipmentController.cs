@@ -120,7 +120,7 @@ namespace Blue_Fin_Inc.Controllers
         // GET: EquipmentController/Edit/5
         public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -169,7 +169,7 @@ namespace Blue_Fin_Inc.Controllers
         // GET: EquipmentController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -205,6 +205,27 @@ namespace Blue_Fin_Inc.Controllers
         private bool EquipmentExists(int id)
         {
             return db.Equipments.Any(e => e.ProductCode == id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddStock(int id, int stock)
+        {
+            if (stock < 1)
+            {
+                return NotFound();
+            }
+
+            Equipment equip = db.Equipments.FirstOrDefault(p => p.ProductCode == id);
+ 
+            db.Equipments.Attach(equip);
+            equip.Stock += stock;
+
+            db.Entry(equip).Property(x => x.Stock).IsModified = true;
+
+            await db.SaveChangesAsync();
+
+            return View("Index", db.Equipments);
         }
     }
 }
