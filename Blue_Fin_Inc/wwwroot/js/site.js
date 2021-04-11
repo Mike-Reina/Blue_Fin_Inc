@@ -21,3 +21,16 @@ function confirmDelete(orderNo, isTrue) {
     }
 
 }
+
+//Stock
+
+var numberIn = document.getElementById("inputStock");
+document.getElementById("go").addEventListener("click", function () {
+    if (numberIn.value < 1) {
+        alert("Number must be greater than 0!");
+    }
+    else {
+
+        alert("You have added " + numberIn.value + " to the stock!");
+    }
+});

@@ -213,7 +213,7 @@ namespace Blue_Fin_Inc.Controllers
         {
             if (stock < 1)
             {
-                return NotFound();
+                return View("EditIndex", db.Livestocks);
             }
 
             Livestock live= db.Livestocks.FirstOrDefault(p => p.ProductCode == id);
@@ -225,7 +225,7 @@ namespace Blue_Fin_Inc.Controllers
 
             await db.SaveChangesAsync();
 
-            return View("Index", db.Livestocks);
+            return View("EditIndex", db.Livestocks);
         }
     }
 }
