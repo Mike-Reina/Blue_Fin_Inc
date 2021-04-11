@@ -78,11 +78,11 @@
             <td>
                 @if (item.Stock > 0)
                 {
-                    <a class="addLink" href="/Order/Check/5?productType=Equipment">Add to Order</a>
+                    @Html.ActionLink("Add to Order", "Check", "Order", new { id = item.ProductCode, productType = "Equipment" }, new { @class= "addToOrderLink" })
                 }
                 @if (item.Stock == 0)
                 {
-                    @Html.ActionLink("Zero Stock Available", "Index", new { /*id = item.ProductCode, productType = "Livestock" */})
+                    @Html.ActionLink("Zero Stock Available", "Index")
                 }
             </td>
         </tr>

@@ -1,6 +1,18 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.addToOrderLink {
+    font-weight: bold;
+    text-decoration: none;
+    color: #37CC44;
+}
+
+.addToOrderLink:hover {
+    background-color: none;
+    text-decoration: none;
+    color: #37CC44;
+}
+
 td .deleteLink {
     color: #FB3106;
     font-weight: bold;
@@ -27,7 +39,7 @@ div .backLink {
 #detailsLink {
     font-weight: bold;
     text-decoration: none;
-    color: #4BF300;
+    color: #37CC44;
 }
 
 #orderConfirmation {
@@ -130,5 +142,5 @@ body {
 }
 
 input[type=number] {
-    width: 7em;
+    width: 6em;
 }
