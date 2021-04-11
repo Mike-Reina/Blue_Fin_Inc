@@ -213,7 +213,7 @@ namespace Blue_Fin_Inc.Controllers
         {
             if (stock < 1)
             {
-                return NotFound();
+                return View("EditIndex", db.Equipments);
             }
 
             Equipment equip = db.Equipments.FirstOrDefault(p => p.ProductCode == id);
@@ -225,7 +225,7 @@ namespace Blue_Fin_Inc.Controllers
 
             await db.SaveChangesAsync();
 
-            return View("Index", db.Equipments);
+            return View("EditIndex", db.Equipments);
         }
     }
 }
