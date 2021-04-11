@@ -65,8 +65,18 @@
                 }
             </td>
             <td>
-                <a id ="editLink" asp-action="Edit" asp-route-id="@item.ProductCode">Edit</a> |
+                <a id="editLink" asp-action="Edit" asp-route-id="@item.ProductCode">Edit</a> |
                 <a class="deleteLink" asp-action="Delete" asp-route-id="@item.ProductCode">Delete</a>
+            </td>
+            <td>
+                @using (Html.BeginForm("AddStock", "Livestock", FormMethod.Post))
+                {
+                    <p>
+                        <input type="hidden" name="id" value="@item.ProductCode">
+                        <input type="number" name="stock">
+                        <input type="submit" value="Add Stock" class="btn btn-primary" />
+                    </p>
+                }
             </td>
         </tr>
 }

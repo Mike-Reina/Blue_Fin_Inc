@@ -119,7 +119,7 @@ namespace Blue_Fin_Inc.Controllers
         // GET: LivestockController/Edit/5
         public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -169,7 +169,7 @@ namespace Blue_Fin_Inc.Controllers
         // GET: LivestockController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -205,6 +205,27 @@ namespace Blue_Fin_Inc.Controllers
         private bool LivestockExists(int id)
         {
             return db.Livestocks.Any(e => e.ProductCode == id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddStock(int id, int stock)
+        {
+            if (stock < 1)
+            {
+                return NotFound();
+            }
+
+            Livestock live= db.Livestocks.FirstOrDefault(p => p.ProductCode == id);
+
+            db.Livestocks.Attach(live);
+            live.Stock += stock;
+
+            db.Entry(live).Property(x => x.Stock).IsModified = true;
+
+            await db.SaveChangesAsync();
+
+            return View("Index", db.Livestocks);
         }
     }
 }
