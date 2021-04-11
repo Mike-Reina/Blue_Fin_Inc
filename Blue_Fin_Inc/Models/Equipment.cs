@@ -38,7 +38,7 @@ namespace Blue_Fin_Inc.Models
 
             set
             { 
-                if (value > 0)
+                if (value >= 0)
                 {
                     lenght = value;
                 }
@@ -56,7 +56,7 @@ namespace Blue_Fin_Inc.Models
 
             set
             {
-                if (value > 0)
+                if (value >= 0)
                 {
                     width = value;
                 }
@@ -74,7 +74,7 @@ namespace Blue_Fin_Inc.Models
 
             set
             {
-                if (value > 0)
+                if (value >= 0)
                 {
                     height = value;
                 }
