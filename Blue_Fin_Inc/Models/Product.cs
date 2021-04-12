@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace Blue_Fin_Inc.Models
 {
+    public enum NotificationType
+    {
+        error,
+        success,
+        warning
+    }
+
     public abstract class Product
     {
         // fields

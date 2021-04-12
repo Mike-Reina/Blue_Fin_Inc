@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Blue_Fin_Inc.Controllers
 {
-    public class EquipmentController : Controller
+    public class EquipmentController : BaseController
     {
         //DB field
         private readonly ApplicationContext db;
@@ -147,14 +147,18 @@ namespace Blue_Fin_Inc.Controllers
             {
                 try
                 {
+                    var titleIn = "\"" + equip.Name + "\" has been updated succesfully!";
                     db.Update(equip);
                     await db.SaveChangesAsync();
+                    Notify("Data saved successfully", title: titleIn, notificationType: NotificationType.success);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!EquipmentExists(equip.ProductCode))
                     {
-                        return NotFound();
+                        var titleIn = "\"" + equip.Name + "\" could not be updated!";
+                        Notify("Could not update data!", title: titleIn, notificationType: NotificationType.error);
+                        return RedirectToAction(nameof(Index));
                     }
                     else
                     {
