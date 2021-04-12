@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Blue_Fin_Inc.Controllers
 {
-    public class LivestockController : Controller
+    public class LivestockController : BaseController
     {
         //DB field
         private readonly ApplicationContext db;
@@ -146,15 +146,18 @@ namespace Blue_Fin_Inc.Controllers
             {
                 try
                 {
+                    var titleIn = "\"" + live.Name + "\" has been updated succesfully!";
                     db.Update(live);
-
                     await db.SaveChangesAsync();
+                    Notify("Data saved successfully", title: titleIn, notificationType: NotificationType.success);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!LivestockExists(live.ProductCode))
                     {
-                        return NotFound();
+                        var titleIn = "\"" + live.Name + "\" could not be updated!";
+                        Notify("Could not update data!", title: titleIn, notificationType: NotificationType.error);
+                        return RedirectToAction(nameof(Index));
                     }
                     else
                     {

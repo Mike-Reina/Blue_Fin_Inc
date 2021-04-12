@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Blue Fin Inc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="sweetalert2.min.css">
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://fonts.googleapis.com/css?family=KoHo" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -63,7 +64,12 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>*
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await Html.PartialAsync("_notificationPartial")
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
