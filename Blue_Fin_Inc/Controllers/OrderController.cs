@@ -172,6 +172,7 @@ namespace Blue_Fin_Inc.Controllers
                 updateStock.Stock -= e.Stock;
                 order1.OrderDetails += " -- Product Code: " + e.ProductCode + ", Name: " + e.Name + ", Qty: " + e.Stock + Environment.NewLine;
             }
+            order1.Date = DateTime.Now;
             db.Orders.Add(order1);
             await db.SaveChangesAsync();
             order1.ContactNo = null;
@@ -202,7 +203,7 @@ namespace Blue_Fin_Inc.Controllers
         // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderNo, CustomerName, Eircode, ContactNo, OrderPrice, ContainsLivestock, OrderDetails")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderNo, CustomerName, Eircode, ContactNo, OrderPrice, Date, ContainsLivestock, OrderDetails")] Order order)
         {
             if(id != order.OrderNo)
             {
