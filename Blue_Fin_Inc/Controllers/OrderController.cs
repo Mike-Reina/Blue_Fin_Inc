@@ -41,11 +41,15 @@ namespace Blue_Fin_Inc.Controllers
         }
 
         // GET: OrderController/ShowOrderDetails/5
-        public ActionResult ShowOrderDetails(int id)
+        public ActionResult ShowOrderDetails(int id, string json)
         {
             Order findOrder = db.Orders.FirstOrDefault(o => o.OrderNo == id );
             if (findOrder != null)
             {
+                if (json == "yes")
+                {
+                    return Ok(findOrder);
+                }
                 return View(findOrder);
             }
             else
