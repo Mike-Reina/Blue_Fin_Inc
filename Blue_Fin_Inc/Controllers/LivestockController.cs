@@ -69,11 +69,15 @@ namespace Blue_Fin_Inc.Controllers
         }
 
         // GET: LivestockController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string json)
         {
             Livestock foundLivestock = db.Livestocks.FirstOrDefault(p => p.ProductCode == id);
             if (foundLivestock != null)
             {
+                if (json == "yes")
+                {
+                    return Ok(foundLivestock);
+                }
                 return View(foundLivestock);
             }
             else

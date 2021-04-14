@@ -69,11 +69,15 @@ namespace Blue_Fin_Inc.Controllers
         }
 
         // GET: EquipmentController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string json)
         {
             Equipment foundEquipment = db.Equipments.FirstOrDefault(p => p.ProductCode == id);
             if (foundEquipment != null)
             {
+                if (json == "yes")
+                {
+                    return Ok(foundEquipment);
+                }
                 return View(foundEquipment);
             }
             else
