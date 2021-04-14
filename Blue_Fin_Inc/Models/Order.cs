@@ -48,6 +48,9 @@ namespace Blue_Fin_Inc.Models
         [DisplayName("Does the order contain livestock?")]
         public bool ContainsLivestock { get; set; }
 
+        [DisplayName("Order Placed on")]
+        public DateTime Date { get; set; }
+
         [DisplayName("Products Ordered")]
         public string OrderDetails { get; set; }
 
@@ -61,8 +64,6 @@ namespace Blue_Fin_Inc.Models
             OrderPrice = 0;
             ContainsLivestock = false;
             OrderDetails = "";
-          
-
             livestockList = new List<CartLivestock>();
             equipementList = new List<CartEquipment>();
         }
