@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataAnnotationsExtensions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +33,7 @@ namespace Blue_Fin_Inc.Models
         }
 
         [Required]
+        [Min(0, ErrorMessage = "Lenght must be Zero or Greater!")]
         public int Lenght
         {
             get => lenght;
@@ -50,6 +52,7 @@ namespace Blue_Fin_Inc.Models
         }
 
         [Required]
+        [Min(0, ErrorMessage = "Width must be Zero or Greater!")]
         public int Width
         {
             get => width;
@@ -62,12 +65,13 @@ namespace Blue_Fin_Inc.Models
                 }
                 else
                 {
-                    throw new ArgumentException("Widht must be grater than 0.");
+                    throw new ArgumentException("Width must be grater than 0.");
                 }
             }
         }
 
         [Required]
+        [Min(0, ErrorMessage = "Height must be Zero or Greater!")]
         public int Height
         {
             get => height;

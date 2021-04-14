@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAnnotationsExtensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -26,6 +27,7 @@ namespace Blue_Fin_Inc.Models
         // properties
         [Required]
         [Key]
+        [DisplayName("Product Code")]
         public int ProductCode 
         { 
             get => productCode; 
@@ -37,6 +39,7 @@ namespace Blue_Fin_Inc.Models
         }
 
         [Required]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be at least 3 character longs!")]
         public string Name
         {
             get => name;
@@ -59,6 +62,7 @@ namespace Blue_Fin_Inc.Models
         }
 
         [Required]
+        [Min(0, ErrorMessage = "Stock must be Zero or Greater!")]
         public int Stock
         { 
             get => stock;
@@ -71,6 +75,7 @@ namespace Blue_Fin_Inc.Models
 
         [Required]
         [DisplayName("Price(€)")]
+        [Min(.1, ErrorMessage = "Price must be greater than 0!")]
         public double Price
         { 
             get => price;
@@ -83,7 +88,7 @@ namespace Blue_Fin_Inc.Models
                 }
                 else
                 {
-                    throw new ArgumentException("Price must be grater than 0.");
+                    throw new ArgumentException("Price must be greater than 0.");
                 }
             }
         }

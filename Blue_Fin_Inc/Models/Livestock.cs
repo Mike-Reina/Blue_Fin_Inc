@@ -25,6 +25,7 @@ namespace Blue_Fin_Inc.Models
 
         // properties
         [Required]
+        [DisplayName("Care Level")]
         public CareLevel CareLevel 
         {
             get => careLevel;
@@ -45,6 +46,7 @@ namespace Blue_Fin_Inc.Models
             }
         }
         [Required]
+        [DisplayName("Water Type")]
         public WaterType WaterType
         {
             get => waterType;
