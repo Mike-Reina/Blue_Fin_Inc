@@ -15,75 +15,21 @@ namespace Blue_Fin_Inc.Models
     public enum WaterType { Fresh, Salt }
     public class Livestock : Product
     {
-        // fields
-        private CareLevel careLevel;
-        private Temperment temperment;
-        private WaterType waterType;
-        private string colours;
-        private string waterConditions;
-        private string maxSize;
-
         // properties
         [Required]
-        public CareLevel CareLevel 
-        {
-            get => careLevel;
-
-            set
-            {
-                careLevel = value;
-            }
-        }
+        [DisplayName("Care Level")]
+        public CareLevel CareLevel { get; set; }
         [Required]
-        public Temperment Temperment
-        {
-            get => temperment;
-
-            set
-            {
-                temperment = value;
-            }
-        }
+        public Temperment Temperment{ get; set; }
         [Required]
-        public WaterType WaterType
-        {
-            get => waterType;
-
-            set
-            {
-                waterType = value;
-            }
-        }
+        [DisplayName("Water Type")]
+        public WaterType WaterType { get; set; }
         [Required]
-        public string Colours
-        {
-            get => colours;
-
-            set
-            {
-                colours = value;
-            }
-        }
+        public string Colours { get; set; }
         [Required]
-        public string WaterConditions
-        {
-            get => waterConditions;
-
-            set
-            {
-                waterConditions = value;
-            }
-        }
+        public string WaterConditions { get; set; }
         [Required]
-        public string MaxSize
-        {
-            get => maxSize;
-
-            set
-            {
-                    maxSize = value;
-            }
-        }
+        public string MaxSize { get; set; }
 
         [Column(TypeName = "nvarchar(100)")]
         [DisplayName("Image Name")]
