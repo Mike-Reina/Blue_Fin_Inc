@@ -12,15 +12,15 @@ namespace Blue_Fin_Inc.Controllers
 {
     public class BaseController : Controller
     {
-        public void Notify(string message, string title = "Sweet Alert Toastr Demo",
+        public void Notify(/*string message,*/ string title = "Blue Fin Inc",
                                     NotificationType notificationType = NotificationType.success)
         {
             var msg = new
             {
-                message = message,
+                //message = message,
                 title = title,
-                icon = notificationType.ToString(),
-                type = notificationType.ToString(),
+                icon = notificationType.ToString(), //sweet alert
+                type = notificationType.ToString(), //toast alert
                 provider = GetProvider()
             };
 

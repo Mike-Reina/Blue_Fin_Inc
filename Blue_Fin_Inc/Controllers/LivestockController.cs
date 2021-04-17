@@ -153,14 +153,14 @@ namespace Blue_Fin_Inc.Controllers
                     var titleIn = "\"" + live.Name + "\" has been updated succesfully!";
                     db.Update(live);
                     await db.SaveChangesAsync();
-                    Notify("Data saved successfully", title: titleIn, notificationType: NotificationType.success);
+                    Notify(/*"Data saved successfully",*/ title: titleIn, notificationType: NotificationType.success);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!LivestockExists(live.ProductCode))
                     {
                         var titleIn = "\"" + live.Name + "\" could not be updated!";
-                        Notify("Could not update data!", title: titleIn, notificationType: NotificationType.error);
+                        Notify(/*"Could not update data!",*/ title: titleIn, notificationType: NotificationType.error);
                         return RedirectToAction(nameof(Index));
                     }
                     else

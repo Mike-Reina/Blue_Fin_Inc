@@ -8,12 +8,13 @@
         if (msg.provider == "sweetAlert") {
             swal.fire({
                 title: msg.title,
-                text: msg.message,
+                //text: msg.message,
                 icon: msg.icon
             });
         } else {
             toastr[msg.type](msg.message, msg.title);
         }
     }
+
 </script>
 

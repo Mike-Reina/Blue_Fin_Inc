@@ -10,7 +10,7 @@
     <p>
         <input type="search" placeholder="Enter Equipment Search Term... " value="@ViewData["GetEquipmentDetails"]" name="EquSearch" style="width:500px"/>
         <input type="submit" value="Search" class="btn btn-primary"/>
-        <a asp-action="Index">Back to All Equipment</a>
+        <a asp-action="Index" class="allBackLinks">Back to All Equipment</a>
     </p>
 </form>
 <table class="table">
@@ -82,7 +82,7 @@
                 }
                 @if (item.Stock == 0)
                 {
-                    @Html.ActionLink("Zero Stock Available", "Index")
+                    @Html.ActionLink("Zero Stock Available", "Index", new { id = item.ProductCode }, new { @class = "zeroStock" })
                 }
             </td>
         </tr>
