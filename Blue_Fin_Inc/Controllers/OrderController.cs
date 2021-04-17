@@ -40,7 +40,7 @@ namespace Blue_Fin_Inc.Controllers
            
         }
 
-        // GET: OrderController/ShowOrderDetails/5
+        // GET: OrderController/ShowOrderDetails/5?yes
         public async Task<IActionResult> ShowOrderDetails(int id, string json)
         {
             Order findOrder = await db.Orders.FirstOrDefaultAsync(o => o.OrderNo == id);
@@ -191,7 +191,6 @@ namespace Blue_Fin_Inc.Controllers
             {
                 return NotFound();
             }
-
             Order findOrder = await db.Orders.FindAsync(id);
             if (findOrder == null)
             {
@@ -244,7 +243,6 @@ namespace Blue_Fin_Inc.Controllers
             {
                 return NotFound();
             }
-
             Order order = await db.Orders.FirstOrDefaultAsync(o=> o.OrderNo== id);
             if (order == null)
             {
