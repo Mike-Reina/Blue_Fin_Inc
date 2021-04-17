@@ -41,9 +41,9 @@ namespace Blue_Fin_Inc.Controllers
         }
 
         // GET: OrderController/ShowOrderDetails/5
-        public ActionResult ShowOrderDetails(int id, string json)
+        public async Task<IActionResult> ShowOrderDetails(int id, string json)
         {
-            Order findOrder = db.Orders.FirstOrDefault(o => o.OrderNo == id );
+            Order findOrder = await db.Orders.FirstOrDefaultAsync(o => o.OrderNo == id);
             if (findOrder != null)
             {
                 if (json == "yes")
@@ -106,7 +106,7 @@ namespace Blue_Fin_Inc.Controllers
             return RedirectToAction("Details", order1);
          }
 
-        public ActionResult Check(int id, string productType)
+        public async Task<IActionResult> Check(int id, string productType)
         {
             if (order1.ContactNo == null)
             {
@@ -116,12 +116,12 @@ namespace Blue_Fin_Inc.Controllers
             {
                 if(productType == "Livestock")
                 {
-                    order1.AddLivestock(db.Livestocks.FirstOrDefault(p => p.ProductCode == id));
+                    order1.AddLivestock(await db.Livestocks.FirstOrDefaultAsync(p => p.ProductCode == id));
                     return RedirectToAction("Index", "Livestock");
                 }
                 else if(productType == "Equipment")
                 {
-                    order1.AddEquipment(db.Equipments.FirstOrDefault(p => p.ProductCode == id));
+                    order1.AddEquipment(await db.Equipments.FirstOrDefaultAsync(p => p.ProductCode == id));
                     return RedirectToAction("Index", "Equipment");
                 }
                 else
@@ -132,16 +132,16 @@ namespace Blue_Fin_Inc.Controllers
             }
         }
 
-        public ActionResult Remove(int id, string productType)
+        public async Task <IActionResult> Remove(int id, string productType)
         {
             if (productType == "Livestock")
             {
-                order1.RemoveLivestock(db.Livestocks.FirstOrDefault(p => p.ProductCode == id));
+                order1.RemoveLivestock( await db.Livestocks.FirstOrDefaultAsync(p => p.ProductCode == id));
                 return RedirectToAction("Details");
             }
             else if (productType == "Equipment")
             {
-                order1.RemoveEquipment(db.Equipments.FirstOrDefault(p => p.ProductCode == id));
+                order1.RemoveEquipment(await db.Equipments.FirstOrDefaultAsync(p => p.ProductCode == id));
                 return RedirectToAction("Details");
             }
             else
@@ -158,7 +158,7 @@ namespace Blue_Fin_Inc.Controllers
             }
             foreach (CartLivestock l in order1.livestockList) 
             {
-                Livestock updateStock = db.Livestocks.FirstOrDefault(p => p.ProductCode == l.ProductCode);
+                Livestock updateStock = await db.Livestocks.FirstOrDefaultAsync(p => p.ProductCode == l.ProductCode);
                 updateStock.Stock -= l.Stock;
                 order1.OrderDetails += " -- Product Code: " + l.ProductCode + ", Name: " + l.Name + ", Qty: " + l.Stock + Environment.NewLine;
             }
@@ -168,12 +168,12 @@ namespace Blue_Fin_Inc.Controllers
             }
             foreach (CartEquipment e in order1.equipementList)
             {
-                Equipment updateStock = db.Equipments.FirstOrDefault(p => p.ProductCode == e.ProductCode);
+                Equipment updateStock = await db.Equipments.FirstOrDefaultAsync(p => p.ProductCode == e.ProductCode);
                 updateStock.Stock -= e.Stock;
                 order1.OrderDetails += " -- Product Code: " + e.ProductCode + ", Name: " + e.Name + ", Qty: " + e.Stock + Environment.NewLine;
             }
             order1.Date = DateTime.Now;
-            db.Orders.Add(order1);
+            await db.Orders.AddAsync(order1);
             await db.SaveChangesAsync();
             order1.ContactNo = null;
             
@@ -216,7 +216,7 @@ namespace Blue_Fin_Inc.Controllers
                     db.Update(order);
                     await db.SaveChangesAsync();
                 }
-                catch(DbUpdateConcurrencyException)
+                catch(DbUpdateConcurrencyException e)
                 {
                     if (!OrderExists(order.OrderNo))
                     {
@@ -224,7 +224,7 @@ namespace Blue_Fin_Inc.Controllers
                     }
                     else
                     {
-                        throw;
+                        throw new DbUpdateConcurrencyException(e.Message);
                     }
                 }
                 return RedirectToAction("Index");
