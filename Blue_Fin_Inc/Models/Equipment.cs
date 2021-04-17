@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataAnnotationsExtensions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,101 +12,31 @@ namespace Blue_Fin_Inc.Models
 {
     public class Equipment : Product
     {
-        // fields
-        private string manufacturer;
-        private int lenght;
-        private int width;
-        private int height;
-        private string colour;
-        private string weight;
-
         // properties
         [Required]
-        public string Manufacturer
-        {
-            get => manufacturer;
-
-            set
-            {
-                manufacturer = value;
-            }
-        }
+        public string Manufacturer { get; set; }
 
         [Required]
-        public int Lenght
-        {
-            get => lenght;
-
-            set
-            { 
-                if (value >= 0)
-                {
-                    lenght = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Lenght must be grater than 0.");
-                }
-            }
-        }
+        [Min(0, ErrorMessage = "Lenght must be Zero or Greater!")]
+        public int Lenght { get; set; }
 
         [Required]
+        [Min(0, ErrorMessage = "Width must be Zero or Greater!")]
         public int Width
-        {
-            get => width;
-
-            set
-            {
-                if (value >= 0)
-                {
-                    width = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Widht must be grater than 0.");
-                }
-            }
-        }
+        { get; set; }
 
         [Required]
+        [Min(0, ErrorMessage = "Height must be Zero or Greater!")]
         public int Height
-        {
-            get => height;
-
-            set
-            {
-                if (value >= 0)
-                {
-                    height = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Height must be grater than 0.");
-                }
-            }
-        }
+        { get; set; }
 
         [Required]
         public string Colour
-        {
-            get => colour;
-
-            set
-            {
-                colour = value;
-            }
-        }
+        { get; set; }
 
         [Required]
         public string Weight
-        {
-            get => weight;
-
-            set
-            {
-                weight = value;
-            }
-        }
+        { get; set; }
 
         [Column(TypeName = "nvarchar(100)")]
         [DisplayName("Image Name")]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAnnotationsExtensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -16,77 +17,29 @@ namespace Blue_Fin_Inc.Models
 
     public abstract class Product
     {
-        // fields
-        private int productCode;
-        private string name;
-        private string description;
-        private int stock;
-        private double price;
 
         // properties
         [Required]
         [Key]
-        public int ProductCode 
-        { 
-            get => productCode; 
-
-            set
-            {
-                productCode = value;
-            } 
-        }
+        [DisplayName("Product Code")]
+        public int ProductCode { get; set; }
 
         [Required]
-        public string Name
-        {
-            get => name;
-
-            set
-            {
-                name = value;
-            }
-        }
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be at least 3 character longs!")]
+        public string Name { get; set; }
 
         [Required]
-        public string Description
-        {
-            get => description;
-
-            set
-            {
-                description = value;
-            }
-        }
+        public string Description { get; set; }
 
         [Required]
-        public int Stock
-        { 
-            get => stock;
+        [Min(0, ErrorMessage = "Stock must be Zero or Greater!")]
+        public int Stock { get; set; }
 
-            set
-            {
-                stock = value;
-            }
-        }
 
         [Required]
         [DisplayName("Price(€)")]
-        public double Price
-        { 
-            get => price;
-            
-            set
-            {
-                if(value > 0)
-                {
-                    price = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Price must be grater than 0.");
-                }
-            }
-        }
+        [Min(.1, ErrorMessage = "Price must be greater than 0!")]
+        public double Price { get; set; }
 
         // constructor 
         public Product(string _name, string _description, double _price)
@@ -110,16 +63,16 @@ namespace Blue_Fin_Inc.Models
                 throw new ArgumentException("Amount to add must be greater than 0.");
             }
 
-            stock += amount;
+            Stock += amount;
         }
         public virtual void RemoveStock(int amount)
         {
-            if ((stock - amount) < 0)
+            if ((Stock - amount) < 0)
             {
-                throw new ArgumentException("Not enough stock available for sale. Only " + stock + " left in stock.");
+                throw new ArgumentException("Not enough stock available for sale. Only " + Stock + " left in stock.");
             }
 
-            stock -= amount;
+            Stock -= amount;
         }
     }
 }
