@@ -23,17 +23,17 @@ function confirmDelete(orderNo, isTrue) {
 }
 
 //Stock
-$(document).on('click', '.go', function (event) {
+//$(document).on('click', '.go', function (event) {
 
-    var $btn = $(this);
-    var numberIn = $btn.siblings('input.input-stock').val();
-    var name = $btn.siblings('input.input-pname').val();
+//    var $btn = $(this);
+//    var numberIn = $btn.siblings('input.input-stock').val();
+//    var name = $btn.siblings('input.input-pname').val();
 
-    if (numberIn < 1) {
-        alert("Number must be greater than 0!");
-    }
-    else {
-        alert("You have added " + numberIn + " stock to product: " + name);
-    }
-});
+//    if (numberIn < 1) {
+//        alert("Number must be greater than 0!");
+//    }
+//    else {
+//        alert("You have added " + numberIn + " stock to product: " + name);
+//    }
+//});
 
