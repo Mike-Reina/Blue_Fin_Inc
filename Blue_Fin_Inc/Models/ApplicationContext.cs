@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +10,7 @@ namespace Blue_Fin_Inc.Models
 {
     public class ApplicationContext : DbContext
     {
-        //Specify the path to the database - this is a default location we havent specified a specific path
-        private const string connectionString = "Server=(localdb)\\mssqllocaldb;DataBase=BlueFinDB5_1;Trusted_Connection=False;";
+        private string connectionString;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
@@ -22,10 +23,19 @@ namespace Blue_Fin_Inc.Models
 
         public DbSet<Order> Orders { get; set; }
 
-        //Seeding to the DB method
-        public void SeedDB()
+        //constructor
+        public ApplicationContext(IConfiguration configuration)
         {
-            ApplicationContext db = new ApplicationContext();
+            connectionString = configuration.GetConnectionString("AzureDB");
+            var builder = new SqlConnectionStringBuilder(connectionString);
+            builder.Password = "";
+            connectionString = builder.ToString();
+        }
+
+        //Seeding to the DB method
+        public void SeedDB(IConfiguration configuration)
+        {
+            ApplicationContext db = new ApplicationContext(configuration);
             db.Database.Migrate();
             if (db.Livestocks.Count() == 0)
             {
@@ -74,13 +84,8 @@ namespace Blue_Fin_Inc.Models
                 db.SaveChanges();
             }
            
-
         }
 
-
-
-
     }
-
 
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +14,15 @@ namespace Blue_Fin_Inc.Controllers
     {
         //DB field
         private readonly ApplicationContext db;
+        private readonly IConfiguration _configuration;
 
         public static Order order1 = new Order();
 
         //Constructor
-        public OrderController()
+        public OrderController(IConfiguration configuration)
         {
-            db = new ApplicationContext();
-
+            db = new ApplicationContext(configuration);
+            _configuration = configuration;
             db.Database.Migrate();
 
         }
