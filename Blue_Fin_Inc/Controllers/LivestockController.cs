@@ -112,23 +112,25 @@ namespace Blue_Fin_Inc.Controllers
 
                 db.Livestocks.Add(newLivestock);
                 db.SaveChanges();
+                Notify("Product creation successfull!", title: newLivestock.Name + " has been added to the system!", notificationType: NotificationType.success);
                 return View("Index", db.Livestocks);
             }
             else
             {
+                Notify("Please try again or contact your system admin!", title: newLivestock.Name + " could not be added to the system!", notificationType: NotificationType.error);
                 return View("Index", db.Livestocks);
             }
         }
 
         // GET: LivestockController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task <IActionResult> Edit(int id)
         {
             if (id == 0)
             {
                 return NotFound();
             }
 
-            Livestock live = db.Livestocks.FirstOrDefault(p => p.ProductCode == id);
+            Livestock live = await db.Livestocks.FindAsync(id);
             if (live == null)
             {
                 return NotFound();
@@ -161,14 +163,14 @@ namespace Blue_Fin_Inc.Controllers
                     {
                         var titleIn = "\"" + live.Name + "\" could not be updated!";
                         Notify("Could not update data!", title: titleIn, notificationType: NotificationType.error);
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(EditIndex));
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(EditIndex));
             }
             return View(live);
         }
@@ -206,7 +208,8 @@ namespace Blue_Fin_Inc.Controllers
 
             db.Livestocks.Remove(product);
             await db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            Notify("Product deletion successfull!", title: product.Name + "has been deleted from the system!", notificationType: NotificationType.success);
+            return RedirectToAction(nameof(EditIndex));
         }
 
         private bool LivestockExists(int id)
@@ -220,6 +223,7 @@ namespace Blue_Fin_Inc.Controllers
         {
             if (stock < 1)
             {
+                Notify("Stock additon unsuccessfull!", title: "Stock to add must be greater than 0!", notificationType: NotificationType.error);
                 return View("EditIndex", db.Livestocks);
             }
 
@@ -231,7 +235,7 @@ namespace Blue_Fin_Inc.Controllers
             db.Entry(live).Property(x => x.Stock).IsModified = true;
 
             await db.SaveChangesAsync();
-
+            Notify("Stock additon successfull!", title: stock + " " + live.Name + " have been added to the stock!", notificationType: NotificationType.success);
             return View("EditIndex", db.Livestocks);
         }
     }

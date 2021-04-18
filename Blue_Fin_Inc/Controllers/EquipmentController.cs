@@ -69,9 +69,9 @@ namespace Blue_Fin_Inc.Controllers
         }
 
         // GET: EquipmentController/Details/5
-        public ActionResult Details(int id, string json)
+        public async Task<IActionResult> Details(int id, string json)
         {
-            Equipment foundEquipment = db.Equipments.FirstOrDefault(p => p.ProductCode == id);
+            Equipment foundEquipment = await db.Equipments.FindAsync(id);
             if (foundEquipment != null)
             {
                 if (json == "yes")
@@ -110,11 +110,13 @@ namespace Blue_Fin_Inc.Controllers
                 }
 
                 db.Equipments.Add(newEquipment);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
+                Notify("Product creation successfull!", title: newEquipment.Name + " has been added to the system!", notificationType: NotificationType.success);
                 return View("Index", db.Equipments);
             }
             else
             {
+                Notify("Please try again or contact your system admin!", title: newEquipment.Name + " could not be added to the system!", notificationType: NotificationType.error);
                 return View("Index", db.Equipments);
             }
         }
@@ -122,14 +124,14 @@ namespace Blue_Fin_Inc.Controllers
         // POST: EquipmentController/Create
 
         // GET: EquipmentController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == 0)
             {
                 return NotFound();
             }
 
-            Equipment equip = db.Equipments.FirstOrDefault(p => p.ProductCode == id);
+            Equipment equip = await db.Equipments.FindAsync(id);
             if (equip == null)
             {
                 return NotFound();
@@ -162,14 +164,14 @@ namespace Blue_Fin_Inc.Controllers
                     {
                         var titleIn = "\"" + equip.Name + "\" could not be updated!";
                         Notify("Could not update data!", title: titleIn, notificationType: NotificationType.error);
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(EditIndex));
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(EditIndex));
             }
             return View(equip);
         }
@@ -207,7 +209,8 @@ namespace Blue_Fin_Inc.Controllers
 
             db.Equipments.Remove(product);
             await db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            Notify("Product deletion successfull!", title: product.Name + "has been deleted from the system!", notificationType: NotificationType.success);
+            return RedirectToAction(nameof(EditIndex));
         }
 
         private bool EquipmentExists(int id)
@@ -221,6 +224,7 @@ namespace Blue_Fin_Inc.Controllers
         {
             if (stock < 1)
             {
+                Notify("Stock additon unsuccessfull!", title: "Stock to add must be greater than 0!", notificationType: NotificationType.error);
                 return View("EditIndex", db.Equipments);
             }
 
@@ -232,7 +236,7 @@ namespace Blue_Fin_Inc.Controllers
             db.Entry(equip).Property(x => x.Stock).IsModified = true;
 
             await db.SaveChangesAsync();
-
+            Notify("Stock additon successfull!", title: stock + " units have been added to " + equip.Name + "!", notificationType: NotificationType.success);
             return View("EditIndex", db.Equipments);
         }
     }
