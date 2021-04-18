@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,15 +17,16 @@ namespace Blue_Fin_Inc.Controllers
         //DB field
         private readonly ApplicationContext db;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IConfiguration _configuration;
 
         //Constructor
-        public EquipmentController(IWebHostEnvironment hostEnvironment)
+        public EquipmentController(IWebHostEnvironment hostEnvironment, IConfiguration configuration)
         {
-            db = new ApplicationContext();
+            db = new ApplicationContext(configuration);
             this._hostEnvironment = hostEnvironment;
-
+            _configuration = configuration;
             db.Database.Migrate();
-            db.SeedDB();
+            db.SeedDB(configuration);
         }
 
         // GET: EquipmentController
