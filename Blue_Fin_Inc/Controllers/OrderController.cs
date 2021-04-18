@@ -177,7 +177,7 @@ namespace Blue_Fin_Inc.Controllers
             await db.SaveChangesAsync();
 
             var titleIn = "Your order is now placed!";
-            Notify(title: titleIn, notificationType: NotificationType.success);
+            Notify(message:"", title: titleIn, notificationType: NotificationType.success);
 
             order1.ContactNo = null;
             
@@ -218,14 +218,14 @@ namespace Blue_Fin_Inc.Controllers
                     var titleIn = "Order #" + order.OrderNo + " has been updated succesfully!";
                     db.Update(order);
                     await db.SaveChangesAsync();
-                    Notify( title: titleIn, notificationType: NotificationType.success);
+                    Notify(message:"", title: titleIn, notificationType: NotificationType.success);
                 }
                 catch(DbUpdateConcurrencyException e)
                 {
                     if (!OrderExists(order.OrderNo))
                     {
                         var titleIn = "Order #" + order.OrderNo + " could not be updated!";
-                        Notify(/*"Could not update data!",*/ title: titleIn, notificationType: NotificationType.error);
+                        Notify(message: "", title: titleIn, notificationType: NotificationType.error);
                         return View("Index");
                     }
                     else
@@ -263,22 +263,21 @@ namespace Blue_Fin_Inc.Controllers
         [ValidateAntiForgeryToken, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int OrderNo)
         {
+            Order findOrder = await db.Orders.FindAsync(OrderNo);
             try
             {
-                Order findOrder = await db.Orders.FindAsync(OrderNo);
                 var titleIn = "Order #" + findOrder.OrderNo + " was successfully deleted!";
                 db.Orders.Remove(findOrder);
                 await db.SaveChangesAsync();
-                Notify(/*"Deletion is completed!",*/ title: titleIn, notificationType: NotificationType.success);
+                Notify(message: "", title: titleIn, notificationType: NotificationType.success);
                 return RedirectToAction("Index");
             }
             catch(Exception e)
             {
-                Order findOrder = await db.Orders.FindAsync(OrderNo);
                 if (!OrderExists(findOrder.OrderNo))
                 {
                     var titleIn = "Order #" + findOrder.OrderNo + " could not be deleted!";
-                    Notify(/*"Could not delete order!",*/ title: titleIn, notificationType: NotificationType.error);
+                    Notify(message: "", title: titleIn, notificationType: NotificationType.error);
                     return View("Index");
                 }
                 else

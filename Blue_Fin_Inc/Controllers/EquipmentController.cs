@@ -154,14 +154,14 @@ namespace Blue_Fin_Inc.Controllers
                     var titleIn = "\"" + equip.Name + "\" has been updated succesfully!";
                     db.Update(equip);
                     await db.SaveChangesAsync();
-                    Notify(/*"Data saved successfully",*/ title: titleIn, notificationType: NotificationType.success);
+                    Notify("Data saved successfully", title: titleIn, notificationType: NotificationType.success);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!EquipmentExists(equip.ProductCode))
                     {
                         var titleIn = "\"" + equip.Name + "\" could not be updated!";
-                        Notify(/*"Could not update data!",*/ title: titleIn, notificationType: NotificationType.error);
+                        Notify("Could not update data!", title: titleIn, notificationType: NotificationType.error);
                         return RedirectToAction(nameof(Index));
                     }
                     else
