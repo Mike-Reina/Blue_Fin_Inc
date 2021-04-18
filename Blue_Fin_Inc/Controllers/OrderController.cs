@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Blue_Fin_Inc.Controllers
 {
-    public class OrderController : Controller
+    public class OrderController : BaseController
     {
         //DB field
         private readonly ApplicationContext db;
@@ -175,9 +175,12 @@ namespace Blue_Fin_Inc.Controllers
             order1.Date = DateTime.Now;
             await db.Orders.AddAsync(order1);
             await db.SaveChangesAsync();
+
+            var titleIn = "Your order is now placed!";
+            Notify(message:"", title: titleIn, notificationType: NotificationType.success);
+
             order1.ContactNo = null;
             
-
             List<Order> findAllOrders = await db.Orders.ToListAsync();
             Order lastOrder = findAllOrders.Last();
           
@@ -212,14 +215,18 @@ namespace Blue_Fin_Inc.Controllers
             {
                 try
                 {
+                    var titleIn = "Order #" + order.OrderNo + " has been updated succesfully!";
                     db.Update(order);
                     await db.SaveChangesAsync();
+                    Notify(message:"", title: titleIn, notificationType: NotificationType.success);
                 }
                 catch(DbUpdateConcurrencyException e)
                 {
                     if (!OrderExists(order.OrderNo))
                     {
-                        return NotFound();
+                        var titleIn = "Order #" + order.OrderNo + " could not be updated!";
+                        Notify(message: "", title: titleIn, notificationType: NotificationType.error);
+                        return View("Index");
                     }
                     else
                     {
@@ -257,9 +264,27 @@ namespace Blue_Fin_Inc.Controllers
         public async Task<IActionResult> DeleteConfirmed(int OrderNo)
         {
             Order findOrder = await db.Orders.FindAsync(OrderNo);
-            db.Orders.Remove(findOrder);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            try
+            {
+                var titleIn = "Order #" + findOrder.OrderNo + " was successfully deleted!";
+                db.Orders.Remove(findOrder);
+                await db.SaveChangesAsync();
+                Notify(message: "", title: titleIn, notificationType: NotificationType.success);
+                return RedirectToAction("Index");
+            }
+            catch(Exception e)
+            {
+                if (!OrderExists(findOrder.OrderNo))
+                {
+                    var titleIn = "Order #" + findOrder.OrderNo + " could not be deleted!";
+                    Notify(message: "", title: titleIn, notificationType: NotificationType.error);
+                    return View("Index");
+                }
+                else
+                {
+                    throw new Exception(e.Message);
+                }
+            }
         }
     }
 }

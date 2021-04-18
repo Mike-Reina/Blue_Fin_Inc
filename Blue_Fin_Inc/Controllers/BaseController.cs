@@ -12,7 +12,7 @@ namespace Blue_Fin_Inc.Controllers
 {
     public class BaseController : Controller
     {
-        public void Notify(string message, string title = "Sweet Alert Toastr Demo",
+        public void Notify(string message, string title = "Blue Fin Inc",
                                     NotificationType notificationType = NotificationType.success)
         {
             var msg = new
@@ -20,7 +20,6 @@ namespace Blue_Fin_Inc.Controllers
                 message = message,
                 title = title,
                 icon = notificationType.ToString(),
-                type = notificationType.ToString(),
                 provider = GetProvider()
             };
 

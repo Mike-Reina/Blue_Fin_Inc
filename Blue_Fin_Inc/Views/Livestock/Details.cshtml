@@ -88,8 +88,8 @@
     }
     @if (Model.Stock == 0)
     {
-        @Html.ActionLink("Zero Stock Available", "Index", new { /*id = item.ProductCode, productType = "Livestock" */})
+        @Html.ActionLink("Zero Stock Available", "Index", new { id = Model.ProductCode }, new { @class = "zeroStock" })
     }
     |
-    <a class="backLink" asp-action="Index">Back to All Livestock</a>
+    <a class="backLink" asp-action="Index" class="allBackLinks">Back to All Livestock</a>
 </div>
