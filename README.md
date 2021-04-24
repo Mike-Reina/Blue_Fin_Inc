@@ -19,7 +19,7 @@ The “Modify Equipment”, “Modify Livestock” and “Modify Order” are vi
  
 From a database perspective, we are utilizing two tables that inherit from the Product: Livestock and Equipment. When a user places an order, we store information about the order in the Order table. The above Entity Relationship diagram demonstrates the relationships between the fore said tables as well as the attributes we are interested in recording within each table.  
  
- 
+ ![image](https://drive.google.com/uc?export=view&id=15CegLeIU12G8efakt-rVHZJD48GYg5jC)
  
 ## 3. Screenshots of the Web Application 
  
