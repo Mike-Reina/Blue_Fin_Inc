@@ -1,4 +1,4 @@
-# Blue_Fin_Inc
+# Blue Fin Inc
 
 ## 1. Project aim and scope 
  
