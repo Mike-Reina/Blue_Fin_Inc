@@ -217,6 +217,9 @@ namespace Blue_Fin_Inc.Controllers
             {
                 try
                 {
+                    Order findOrder = await db.Orders.AsNoTracking().SingleOrDefaultAsync(o => o.OrderNo == id);
+                    order.OrderPrice = findOrder.OrderPrice;
+
                     var titleIn = "Order #" + order.OrderNo + " has been updated succesfully!";
                     db.Update(order);
                     await db.SaveChangesAsync();
