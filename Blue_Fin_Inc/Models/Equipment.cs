@@ -17,7 +17,8 @@ namespace Blue_Fin_Inc.Models
         public string Manufacturer { get; set; }
 
         [Required]
-        [Min(0, ErrorMessage = "Lenght must be Zero or Greater!")]
+        [Min(0, ErrorMessage = "Length must be Zero or Greater!")]
+        [DisplayName("Length")]
         public int Lenght { get; set; }
 
         [Required]
