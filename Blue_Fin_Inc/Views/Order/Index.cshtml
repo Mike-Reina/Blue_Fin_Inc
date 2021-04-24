@@ -28,6 +28,9 @@
             <thead>
                 <tr>
                     <th>
+                        @Html.DisplayNameFor(model => model.OrderNo)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.CustomerName)
                     </th>
                     <th>
@@ -48,31 +51,34 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CustomerName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Eircode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ContactNo)
-                        </td>
-                        <td>
-                            @{
-                                var temp = (Math.Truncate(item.OrderPrice * 100) / 100).ToString("n2");
-                                @Html.DisplayFor(model => temp)
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ContainsLivestock)
-                        </td>
-                        <td>
-                            <a id="editLink" asp-action="Edit" asp-route-id="@item.OrderNo">Edit</a> |
-                            <a id="detailsLink" asp-action="ShowOrderDetails" asp-route-id="@item.OrderNo">Details</a> |
-                            <a class="deleteLink" asp-action="Delete" asp-route-id="@item.OrderNo">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Eircode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactNo)
+                    </td>
+                    <td>
+                        @{
+                            var temp = (Math.Truncate(item.OrderPrice * 100) / 100).ToString("n2");
+                            @Html.DisplayFor(model => temp)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContainsLivestock)
+                    </td>
+                    <td>
+                        <a id="editLink" asp-action="Edit" asp-route-id="@item.OrderNo">Edit</a> |
+                        <a id="detailsLink" asp-action="ShowOrderDetails" asp-route-id="@item.OrderNo">Details</a> |
+                        <a class="deleteLink" asp-action="Delete" asp-route-id="@item.OrderNo">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

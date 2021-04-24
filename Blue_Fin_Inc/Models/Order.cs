@@ -45,7 +45,7 @@ namespace Blue_Fin_Inc.Models
         public double OrderPrice { get; set; }
 
         [Required]
-        [DisplayName("Does the order contain livestock?")]
+        [DisplayName("Contains livestock?")]
         public bool ContainsLivestock { get; set; }
 
         [DisplayName("Order Placed on")]
