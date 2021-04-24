@@ -15,7 +15,7 @@ namespace Blue_Fin_Inc.Models
     {
         //Collection of products
         public List<CartLivestock> livestockList;
-        public List<CartEquipment> equipementList;
+        public List<CartEquipment> equipmentList;
 
         //Property (ies)
         [Key]
@@ -65,14 +65,14 @@ namespace Blue_Fin_Inc.Models
             ContainsLivestock = false;
             OrderDetails = "";
             livestockList = new List<CartLivestock>();
-            equipementList = new List<CartEquipment>();
+            equipmentList = new List<CartEquipment>();
         }
 
         public Order()
         {
             OrderDetails ="";
             livestockList = new List<CartLivestock>();
-            equipementList = new List<CartEquipment>();
+            equipmentList = new List<CartEquipment>();
         }
 
         //Methods
@@ -100,12 +100,12 @@ namespace Blue_Fin_Inc.Models
 
         public void AddEquipment(Equipment product_in)
         {
-            CartEquipment find = equipementList.FirstOrDefault(l => l.ProductCode == product_in.ProductCode);
+            CartEquipment find = equipmentList.FirstOrDefault(l => l.ProductCode == product_in.ProductCode);
             if (find == null)
             {
                 CartEquipment newOrderProd = new CartEquipment(product_in.Manufacturer, product_in.Lenght, product_in.Width, product_in.Height, product_in.Colour, product_in.Weight, product_in.Name, product_in.Description, product_in.Price) { ProductCode = product_in.ProductCode }; 
                 newOrderProd.Stock = 1;
-                equipementList.Add(newOrderProd);
+                equipmentList.Add(newOrderProd);
             }
             else
             {
@@ -143,12 +143,12 @@ namespace Blue_Fin_Inc.Models
         public void RemoveEquipment(Equipment product_out)
         {
             //first lets find the product we need to remove from the order
-            CartEquipment find = equipementList.FirstOrDefault(p => p.ProductCode == product_out.ProductCode);
+            CartEquipment find = equipmentList.FirstOrDefault(p => p.ProductCode == product_out.ProductCode);
             if (find != null)
             {
                 if (find.Stock == 1)
                 {
-                    equipementList.Remove(find);
+                    equipmentList.Remove(find);
                 }
                 else
                 {
