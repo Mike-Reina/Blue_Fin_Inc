@@ -50,7 +50,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a href="@("http://localhost:32679/Equipment/Details/" + item.ProductCode)">
+                <a href="@("http://bluefininc.azurewebsites.net/Equipment/Details/" + item.ProductCode)">
                     <img src="@("~/images/" + item.ImageName)" asp-append-version="true" width="150px" height="150px" />
                 </a>
             </td>
