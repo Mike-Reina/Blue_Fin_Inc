@@ -56,9 +56,9 @@ namespace Blue_Fin_Inc.Models
 
 
         //Constructor
-        public Order(string eircode_in, string contactNo_in)
+        public Order(string custName, string eircode_in, string contactNo_in)
         {
-
+            CustomerName = custName;
             Eircode = eircode_in;
             ContactNo = contactNo_in;
             OrderPrice = 0;
