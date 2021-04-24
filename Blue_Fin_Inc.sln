@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blue_Fin_Inc", "Blue_Fin_Inc\Blue_Fin_Inc.csproj", "{145DB483-E50E-48C5-8205-309246F10453}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blue_Fin_Inc", "Blue_Fin_Inc\Blue_Fin_Inc.csproj", "{145DB483-E50E-48C5-8205-309246F10453}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueFinUnitTesting", "BlueFinUnitTesting\BlueFinUnitTesting.csproj", "{BE69BA14-A14E-438C-957A-DB576C2591C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{145DB483-E50E-48C5-8205-309246F10453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{145DB483-E50E-48C5-8205-309246F10453}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{145DB483-E50E-48C5-8205-309246F10453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE69BA14-A14E-438C-957A-DB576C2591C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE69BA14-A14E-438C-957A-DB576C2591C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE69BA14-A14E-438C-957A-DB576C2591C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE69BA14-A14E-438C-957A-DB576C2591C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
