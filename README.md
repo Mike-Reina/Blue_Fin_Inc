@@ -66,3 +66,102 @@ From a database perspective, we are utilizing two tables that inherit from the P
 ### Modify Order:
 
   ![image](https://drive.google.com/uc?export=view&id=1qhpCRzffz6-oSAO0kZUWV4DedzAlABIp)
+
+## 4. URI Addressing Scheme 
+ 
+Home:
+http://bluefininc.azurewebsites.net/ 
+ 
+Equipment Listed:
+http://bluefininc.azurewebsites.net/Equipment/Index
+ 
+Equipment List w/ Search-Term:
+http://bluefininc.azurewebsites.net/Equipment/Index?EquSearch={search-term}
+ 
+Equipment Detailed:
+http://bluefininc.azurewebsites.net/Equipment/Details/{id}
+ 
+Equipment Details by API Request:
+http://bluefininc.azurewebsites.net/Equipment/Details/{id}?json=yes
+ 
+Equipment Listed for Modification(Edit):
+http://bluefininc.azurewebsites.net/Equipment/EditIndex
+ 
+Equipment Listed for Modification w/ Search-Term:
+http://bluefininc.azurewebsites.net/Equipment/EditIndex?EquSearch={search-term}
+ 
+Create Equipment:
+http://bluefininc.azurewebsites.net/Equipment/Create/{equipment}
+ 
+Edit Equipment:
+http://bluefininc.azurewebsites.net/Equipment/Edit/{id}/{equipment}
+ 
+Delete Equipment:
+http://bluefininc.azurewebsites.net/Equipment/Delete/{id}
+ 
+Equipment Add Stock:
+http://bluefininc.azurewebsites.net/Equipment/AddStock/{id}/{amount}
+ 
+Livestock Listed:
+http://bluefininc.azurewebsites.net/Livestock/Index
+ 
+Livestock List w/ Search-Term:
+http://bluefininc.azurewebsites.net/Livestock/Index?LiveSearch={search-term}
+ 
+Livestock Detailed:
+http://bluefininc.azurewebsites.net/Livestock/Details/{id}
+Livestock Details by API Request:
+http://bluefininc.azurewebsites.net/Livestock/Details/{id}?json=yes
+ 
+Livestock Listed for Modification(Edit):
+http://bluefininc.azurewebsites.net/Livestock/EditIndex
+ 
+Livestock Listed for Modification w/ Search-Term:
+http://bluefininc.azurewebsites.net/Livestock/EditIndex?LiveSearch={search-term}
+ 
+Create Livestock:
+http://bluefininc.azurewebsites.net/Livestock/Create/{livestock}
+ 
+Edit Livestock:
+http://bluefininc.azurewebsites.net/Livestock/Edit/{id}/{livestock}
+ 
+Delete Livestock:
+http://bluefininc.azurewebsites.net/Livestock/Delete/{id}
+ 
+Livestock Add Stock:
+http://bluefininc.azurewebsites.net/Livestock/AddStock/{id}/{amount}
+ 
+Livestock/Equipment ‘Add To Order’ e.g. product code 3 from the Livestock list of products:
+http://bluefininc.azurewebsites.net/Order/Check/3?productType=Livestock
+ 
+Create Order:
+http://bluefininc.azurewebsites.net/Order/Create 
+ 
+My Order (contains information about the order and the products added to the order): 
+http://bluefininc.azurewebsites.net/Order/Details 
+ 
+Remove Item from the Order Summary prior to the order being placed e.g. an equipment with product code 2:
+http://bluefininc.azurewebsites.net/Order/Remove/2?productType=Equipment 
+ 
+Place Order Button: 
+http://bluefininc.azurewebsites.net/Order/PlaceOrder  
+ 
+Modify Order Listing all the placed orders:
+http://bluefininc.azurewebsites.net/Order 
+ 
+Modify Order Listing all the placed orders containing a string e.g. ‘Eirini’: 
+http://bluefininc.azurewebsites.net/Order?OrderSearch=Eirini 
+ 
+ 
+Edit Order e.g. order #1:
+http://bluefininc.azurewebsites.net/Order/Edit/1 
+ 
+ 
+Show Order Details e.g. order #1
+http://bluefininc.azurewebsites.net/Order/ShowOrderDetails/1 
+ 
+Client request to Show Order Details e.g. order #1:
+http://bluefininc.azurewebsites.net/Order/ShowOrderDetails/1?json=yes 
+ 
+Delete Order e.g. order #1
+http://bluefininc.azurewebsites.net/Order/Delete/1 
