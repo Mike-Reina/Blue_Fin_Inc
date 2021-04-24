@@ -101,7 +101,7 @@ namespace Blue_Fin_Inc.Controllers
                 order1.Eircode = order.Eircode;
                 order1.ContainsLivestock = false;
                 order1.livestockList.Clear();
-                order1.equipementList.Clear();
+                order1.equipmentList.Clear();
                 order1.OrderPrice = 0; 
             }
            
@@ -164,11 +164,11 @@ namespace Blue_Fin_Inc.Controllers
                 updateStock.Stock -= l.Stock;
                 order1.OrderDetails += " -- Product Code: " + l.ProductCode + ", Name: " + l.Name + ", Qty: " + l.Stock + Environment.NewLine;
             }
-            if (order1.equipementList.Count > 0)
+            if (order1.equipmentList.Count > 0)
             {
                 order1.OrderDetails += " || Equipment Items " + Environment.NewLine;
             }
-            foreach (CartEquipment e in order1.equipementList)
+            foreach (CartEquipment e in order1.equipmentList)
             {
                 Equipment updateStock = await db.Equipments.FirstOrDefaultAsync(p => p.ProductCode == e.ProductCode);
                 updateStock.Stock -= e.Stock;
