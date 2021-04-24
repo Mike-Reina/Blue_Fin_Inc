@@ -84,7 +84,7 @@ namespace Blue_Fin_Inc.Controllers
             }
            
             var ordered = from o in db.Orders select o;
-            ordered = ordered.OrderBy(o => o.CustomerName);
+            ordered = ordered.OrderBy(o => o.OrderNo);
             return View(await ordered.ToListAsync());
         }
 
