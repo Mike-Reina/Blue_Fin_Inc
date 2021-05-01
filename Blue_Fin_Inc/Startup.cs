@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,10 +13,14 @@ namespace Blue_Fin_Inc
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration; 
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration _configuration;
+
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             _configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }

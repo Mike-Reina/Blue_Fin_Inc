@@ -20,13 +20,13 @@ namespace Blue_Fin_Inc.Controllers
         private readonly IConfiguration _configuration;
 
         //Constructor
-        public EquipmentController(IWebHostEnvironment hostEnvironment, IConfiguration configuration)
+        public EquipmentController(IWebHostEnvironment hostEnvironment, IConfiguration configuration, IWebHostEnvironment env)
         {
-            db = new ApplicationContext(configuration);
+            db = new ApplicationContext(configuration, env);
             this._hostEnvironment = hostEnvironment;
             _configuration = configuration;
             db.Database.Migrate();
-            db.SeedDB(configuration);
+            db.SeedDB(configuration, env);
         }
 
         // GET: EquipmentController
