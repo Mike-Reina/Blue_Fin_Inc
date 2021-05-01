@@ -1,4 +1,5 @@
 # Blue Fin Inc
+Website link: http://bluefininc.azurewebsites.net/
 
 ## 1. Project aim and scope 
  
@@ -13,7 +14,8 @@ There are 6 options available at the top of the website. These are “Equipment�
 The “Equipment”, “Livestock” and “My Order” options are those which will be available to a customer. These will each bring up views for their titles namesake. “Equipment” and “Livestock” will list each of their products allowing customers to add them to their order. They can also click on the product images to be brought to a page showing all details for that product. The “My Order” view will allow customers to create an order and start adding products to it. They can return here at any time to get a summary of the order. Once happy with the order it can be submitted.
  
 The “Modify Equipment”, “Modify Livestock” and “Modify Order” are views available to employees. These control the CRUD operations for each, as well as allowing an employee to quickly add stock to the system. The “Modify Order” view will also allow employees to check online orders for what is required in each when preparing for shipment. 
- 
+
+To make notifications more user friendly, toastr and sweetAlerts were leveraged. Most alerts use sweetAlerts to notify the user of the actions taken. However this type of alert can be quite intrusive. When adding a product to your order we wanted an alert which was less intrusive so toastr alerts were used.
  
 ## 2. Database Design  
  
