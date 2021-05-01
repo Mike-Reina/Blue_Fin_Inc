@@ -113,7 +113,7 @@ namespace Blue_Fin_Inc.Controllers
 
                 db.Equipments.Add(newEquipment);
                 await db.SaveChangesAsync();
-                Notify("Product creation successfull!", title: newEquipment.Name + " has been added to the system!", notificationType: NotificationType.success);
+                Notify("Product creation successful!", title: newEquipment.Name + " has been added to the system!", notificationType: NotificationType.success);
                 return View("Index", db.Equipments);
             }
             else
@@ -211,7 +211,7 @@ namespace Blue_Fin_Inc.Controllers
 
             db.Equipments.Remove(product);
             await db.SaveChangesAsync();
-            Notify("Product deletion successfull!", title: product.Name + "has been deleted from the system!", notificationType: NotificationType.success);
+            Notify("Product deletion successful!", title: product.Name + "has been deleted from the system!", notificationType: NotificationType.success);
             return RedirectToAction(nameof(EditIndex));
         }
 
@@ -226,7 +226,7 @@ namespace Blue_Fin_Inc.Controllers
         {
             if (stock < 1)
             {
-                Notify("Stock additon unsuccessfull!", title: "Stock to add must be greater than 0!", notificationType: NotificationType.error);
+                Notify("Stock addition unsuccessful!", title: "Stock to add must be greater than 0!", notificationType: NotificationType.error);
                 return View("EditIndex", db.Equipments);
             }
 
@@ -238,7 +238,7 @@ namespace Blue_Fin_Inc.Controllers
             db.Entry(equip).Property(x => x.Stock).IsModified = true;
 
             await db.SaveChangesAsync();
-            Notify("Stock additon successfull!", title: stock + " units have been added to " + equip.Name + "!", notificationType: NotificationType.success);
+            Notify("Stock addition successful!", title: stock + " units have been added to " + equip.Name + "!", notificationType: NotificationType.success);
             return View("EditIndex", db.Equipments);
         }
     }
