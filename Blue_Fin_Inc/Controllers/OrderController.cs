@@ -134,6 +134,7 @@ namespace Blue_Fin_Inc.Controllers
                 }
                 else
                 {
+                    Notify("Unable to add to order!", notificationType: NotificationType.error, provider: "toastr", title: "Error");
                     return RedirectToAction("Index", "Home");
                 }
                 
