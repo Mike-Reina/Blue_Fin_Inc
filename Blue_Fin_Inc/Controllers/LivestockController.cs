@@ -114,7 +114,7 @@ namespace Blue_Fin_Inc.Controllers
 
                 db.Livestocks.Add(newLivestock);
                 db.SaveChanges();
-                Notify("Product creation successfull!", title: newLivestock.Name + " has been added to the system!", notificationType: NotificationType.success);
+                Notify("Product creation successful!", title: newLivestock.Name + " has been added to the system!", notificationType: NotificationType.success);
                 return View("Index", db.Livestocks);
             }
             else
@@ -210,7 +210,7 @@ namespace Blue_Fin_Inc.Controllers
 
             db.Livestocks.Remove(product);
             await db.SaveChangesAsync();
-            Notify("Product deletion successfull!", title: product.Name + "has been deleted from the system!", notificationType: NotificationType.success);
+            Notify("Product deletion successful!", title: product.Name + "has been deleted from the system!", notificationType: NotificationType.success);
             return RedirectToAction(nameof(EditIndex));
         }
 
@@ -225,7 +225,7 @@ namespace Blue_Fin_Inc.Controllers
         {
             if (stock < 1)
             {
-                Notify("Stock additon unsuccessfull!", title: "Stock to add must be greater than 0!", notificationType: NotificationType.error);
+                Notify("Stock addition unsuccessful!", title: "Stock to add must be greater than 0!", notificationType: NotificationType.error);
                 return View("EditIndex", db.Livestocks);
             }
 
@@ -237,7 +237,7 @@ namespace Blue_Fin_Inc.Controllers
             db.Entry(live).Property(x => x.Stock).IsModified = true;
 
             await db.SaveChangesAsync();
-            Notify("Stock additon successfull!", title: stock + " " + live.Name + " have been added to the stock!", notificationType: NotificationType.success);
+            Notify("Stock addition successful!", title: stock + " " + live.Name + " have been added to the stock!", notificationType: NotificationType.success);
             return View("EditIndex", db.Livestocks);
         }
     }
