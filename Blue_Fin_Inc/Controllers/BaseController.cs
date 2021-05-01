@@ -12,7 +12,7 @@ namespace Blue_Fin_Inc.Controllers
 {
     public class BaseController : Controller
     {
-        public void Notify(string message, string title = "Blue Fin Inc",
+        public void Notify(string message, string title = "Blue Fin Inc", string provider = "sweetAlert",
                                     NotificationType notificationType = NotificationType.success)
         {
             var msg = new
@@ -20,24 +20,25 @@ namespace Blue_Fin_Inc.Controllers
                 message = message,
                 title = title,
                 icon = notificationType.ToString(),
-                provider = GetProvider()
+                type = notificationType.ToString(),
+                provider = provider
             };
 
             TempData["Message"] = JsonConvert.SerializeObject(msg);
         }
 
-        private string GetProvider()
-        {
-            var builder = new ConfigurationBuilder()
-                            .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                            .AddEnvironmentVariables();
+        //private string GetProvider()
+        //{
+        //    var builder = new ConfigurationBuilder()
+        //                    .SetBasePath(Directory.GetCurrentDirectory())
+        //                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        //                    .AddEnvironmentVariables();
 
-            IConfigurationRoot configuration = builder.Build();
+        //    IConfigurationRoot configuration = builder.Build();
 
-            var value = configuration["NotificationProvider"];
+        //    var value = configuration["NotificationProvider"];
 
-            return value;
-        }
+        //    return value;
+        //}
     }
 }

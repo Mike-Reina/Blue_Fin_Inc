@@ -118,16 +118,23 @@ namespace Blue_Fin_Inc.Controllers
             {
                 if(productType == "Livestock")
                 {
-                    order1.AddLivestock(await db.Livestocks.FirstOrDefaultAsync(p => p.ProductCode == id));
+                    Livestock liveFound = await db.Livestocks.FirstOrDefaultAsync(p => p.ProductCode == id);
+                    order1.AddLivestock(liveFound);
+                    string msg = liveFound.Name + " added to order!";
+                    Notify(msg, notificationType: NotificationType.success, provider: "toastr", title: "Success");
                     return RedirectToAction("Index", "Livestock");
                 }
                 else if(productType == "Equipment")
                 {
-                    order1.AddEquipment(await db.Equipments.FirstOrDefaultAsync(p => p.ProductCode == id));
+                    Equipment equipFound = await db.Equipments.FirstOrDefaultAsync(p => p.ProductCode == id);
+                    order1.AddEquipment(equipFound);
+                    string msg = equipFound.Name + " added to order!";
+                    Notify(msg, notificationType: NotificationType.success, provider: "toastr", title: "Success");
                     return RedirectToAction("Index", "Equipment");
                 }
                 else
                 {
+                    Notify("Unable to add to order!", notificationType: NotificationType.error, provider: "toastr", title: "Error");
                     return RedirectToAction("Index", "Home");
                 }
                 
