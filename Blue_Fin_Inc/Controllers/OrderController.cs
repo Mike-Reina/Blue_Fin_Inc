@@ -1,4 +1,5 @@
 ﻿using Blue_Fin_Inc.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +20,9 @@ namespace Blue_Fin_Inc.Controllers
         public static Order order1 = new Order();
 
         //Constructor
-        public OrderController(IConfiguration configuration)
+        public OrderController(IConfiguration configuration, IWebHostEnvironment env)
         {
-            db = new ApplicationContext(configuration);
+            db = new ApplicationContext(configuration, env);
             _configuration = configuration;
             db.Database.Migrate();
 

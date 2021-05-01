@@ -1,6 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,7 @@ namespace Blue_Fin_Inc.Models
     public class ApplicationContext : DbContext
     {
         private string connectionString;
+   
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
@@ -24,18 +27,26 @@ namespace Blue_Fin_Inc.Models
         public DbSet<Order> Orders { get; set; }
 
         //constructor
-        public ApplicationContext(IConfiguration configuration)
+        public ApplicationContext(IConfiguration configuration, IWebHostEnvironment env)
         {
+
             connectionString = configuration.GetConnectionString("AzureDB");
             var builder = new SqlConnectionStringBuilder(connectionString);
-            builder.Password = "EAD2021EiriniMike";
+        
+            if (env.IsDevelopment())
+            {
+                builder.Password = configuration["DbPassword"];
+            }
+
+
             connectionString = builder.ToString();
         }
 
+
         //Seeding to the DB method
-        public void SeedDB(IConfiguration configuration)
+        public void SeedDB(IConfiguration configuration, IWebHostEnvironment env)
         {
-            ApplicationContext db = new ApplicationContext(configuration);
+            ApplicationContext db = new ApplicationContext(configuration, env);
             db.Database.Migrate();
             if (db.Livestocks.Count() == 0)
             {
